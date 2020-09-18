@@ -1,0 +1,46 @@
+[
+  {
+    "insert": "<script>alert(\"xss\");</script>\n<script>alert(\"xss\");</script>"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "<script>alert(\"xss\");</script>"
+  },
+  {
+    "attributes": {
+      "align": "right",
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "not xss & okay"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "not xss & okay"
+  },
+  {
+    "attributes": {
+      "align": "center",
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n"
+  }
+]

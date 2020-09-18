@@ -1,0 +1,102 @@
+[
+  {
+    "insert": "Normal text to start.\nchalk"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n\n"
+  },
+  {
+    "insert": "cheese"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "Now an ordered list:\napples"
+  },
+  {
+    "attributes": {
+      "list": "ordered"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "oranges"
+  },
+  {
+    "attributes": {
+      "align": "right",
+      "list": "ordered"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "pears"
+  },
+  {
+    "attributes": {
+      "list": "ordered"
+    },
+    "insert": "\n\n"
+  },
+  {
+    "insert": "And finally, adjacent lists:\nplease"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "excuse"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "my"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "dear"
+  },
+  {
+    "attributes": {
+      "list": "ordered"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "aunt"
+  },
+  {
+    "attributes": {
+      "list": "ordered"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "sally"
+  },
+  {
+    "attributes": {
+      "list": "ordered"
+    },
+    "insert": "\n"
+  }
+]

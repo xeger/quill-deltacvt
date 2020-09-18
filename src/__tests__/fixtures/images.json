@@ -1,0 +1,89 @@
+[
+  {
+    "attributes": {
+      "height": "38",
+      "width": "140"
+    },
+    "insert": {
+      "image": "https://quilljs.com/assets/images/logo.svg"
+    }
+  },
+  {
+    "insert": "\nSized image.\n\n"
+  },
+  {
+    "insert": {
+      "image": "https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png"
+    }
+  },
+  {
+    "insert": "\nLeft-aligned image.\n\n"
+  },
+  {
+    "insert": {
+      "image": "https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png"
+    }
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "Center-aligned image."
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n\n"
+  },
+  {
+    "insert": {
+      "image": "https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png"
+    }
+  },
+  {
+    "attributes": {
+      "align": "right"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "Right-aligned image."
+  },
+  {
+    "attributes": {
+      "align": "right"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "\n"
+  },
+  {
+    "attributes": {
+      "height": "38",
+      "width": "140"
+    },
+    "insert": {
+      "image": "https://quilljs.com/assets/images/logo.svg"
+    }
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "Sized and centered image."
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n"
+  }
+]
