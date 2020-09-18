@@ -9,8 +9,8 @@ import {
   isText,
 } from './interfaces';
 
-const hasLineFormats = (attr?: Attributes, g: Generator) =>
-  attr && (attr.align || attr.list);
+const hasLineFormats = (attr: Attributes, g: Generator) =>
+  Object.keys(attr).some(g.isLineFormat);
 
 /**
  * Split a string on '\n' (but include the newline at the end of each,
@@ -46,8 +46,7 @@ class Chunk implements IChunk {
     Object.entries(a).forEach(([k, v]) => (this.attributes[k] = v));
   }
 
-  applyLineFrom(a?: Attributes, g: Generator): void {
-    if (!a) return;
+  applyLineFrom(a: Attributes, g: Generator): void {
     Object.entries(a).forEach(([k, v]) => {
       if (g.isLineFormat(k)) this.attributes[k] = v;
     });
