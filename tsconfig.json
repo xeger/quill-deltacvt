@@ -1,4 +1,7 @@
 {
+  "exclude": [
+    "src/**/__tests__/*"
+  ],
   "compilerOptions": {
     /* Basic Options */
     "target": "esnext",

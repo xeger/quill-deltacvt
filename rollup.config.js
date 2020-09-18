@@ -10,7 +10,7 @@ export default {
 
   // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
   // https://rollupjs.org/guide/en#external-e-external
-  external: ['html-entities', 'to-style'],
+  external: ['html-entities'],
 
   plugins: [
     // Allows node_modules resolution
@@ -24,7 +24,6 @@ export default {
       babelHelpers: 'bundled',
       extensions,
       include: ['src/**/*'],
-      exclude: ['src/**/__tests_/*'],
     }),
   ],
 
