@@ -1,5 +1,4 @@
 import { XmlEntities } from 'html-entities';
-import toStyle from 'to-style';
 
 import { Attributes, Chunk, Content, Generator, isText } from '../interfaces';
 
@@ -12,20 +11,13 @@ export type TextFormatter = (text: string, value?: boolean | string) => string;
 
 const ENCLOSING_TAG = 'div';
 
-const ENCLOSING_STYLE = {
-  fontFamily: 'sans-serif',
-  whiteSpace: 'pre-wrap',
-};
+const ENCLOSING_STYLE = 'font-family: sans-serif; white-space: pre-wrap';
 
 /**
  * Inline CSS styles for selected line formats.
  */
 const lineStyles = {
-  list: toStyle.string({
-    margin: 0,
-    listStylePosition: 'inside',
-    paddingLeft: '1.5rem',
-  }),
+  list: 'margin: 0px; list-style-position: inside; padding-left: 1.5rem',
 };
 
 /**
@@ -54,12 +46,10 @@ const TEXT_FORMATS: Record<string, TextFormatter> = {
   underline: (text) => `<u>${text}</u>`,
 };
 
-export type Style = Record<string, number | string | string[]>;
-
 export interface Options {
   enclosing?: {
-    style: Style;
-    tag: string;
+    style: string;
+    tag: string | null;
   };
   paragraph?: {
     tag: string;
@@ -69,7 +59,7 @@ export interface Options {
 export default class SimpleHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBED_FORMATS };
   enclosingTag: string | null;
-  enclosingStyle: Style | null;
+  enclosingStyle: string;
   paragraphTag: string;
   textFormatters: Record<string, TextFormatter> = { ...TEXT_FORMATS };
 
@@ -144,8 +134,9 @@ export default class SimpleHTML implements Generator {
 
   wrap(html: string): string {
     if (this.enclosingTag) {
-      const style = toStyle.string(this.enclosingStyle);
-      const styleAttr = style ? ` style="${style}"` : '';
+      const styleAttr = this.enclosingStyle
+        ? ` style="${this.enclosingStyle}"`
+        : '';
       html = `<${this.enclosingTag}${styleAttr}>${html}</${this.enclosingTag}>`;
     }
     return html;
