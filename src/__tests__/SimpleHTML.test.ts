@@ -1,4 +1,4 @@
-import { TRIVIAL_ALIGN } from './fixtures';
+import { TRIVIAL_ALIGN } from '../../test/fixtures';
 
 import { generate } from '..';
 import SimpleHTML from '../generators/SimpleHTML';
@@ -15,7 +15,7 @@ describe('SimpleHTML', () => {
   });
 
   describe('options', () => {
-    test('custom paragraph tag', () => {
+    test('paragraph.tagName', () => {
       const g = new SimpleHTML({ paragraph: { tagName: 'p' } });
       const html = generate(TRIVIAL_ALIGN, g);
       expect(html).toMatch(/^<p/);

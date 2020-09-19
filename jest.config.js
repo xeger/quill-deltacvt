@@ -14,7 +14,7 @@ module.exports = {
   // preset: 'ts-jest/presets/js-with-ts',
   roots: ['src'],
   testEnvironment: 'node',
-  // setupTestFrameworkScriptFile: '<rootDir>test/setup.js',
+  setupFilesAfterEnv: ['<rootDir>test/setup.js'],
   testRegex: '/__tests__/.*\\.test.[jt]s$',
   testURL: 'http://localhost',
   transform: {

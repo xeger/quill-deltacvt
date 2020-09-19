@@ -1,3 +1,5 @@
+import 'html-validate/jest';
+
 import {
   IMAGES,
   LISTS,
@@ -5,16 +7,26 @@ import {
   SMORGASBORD,
   TRIVIAL_ALIGN,
   TRIVIAL_LIST,
-} from './fixtures';
+} from '../../test/fixtures';
 import * as visual from './visual';
 
 import { generate } from '../index';
 
 // For visual comparison, turn generated fragments into proper HTML documents.
-const wrap = (ops) =>
-  `<!DOCTYPE html><html><body style="font-family: sans-serif; white-space: pre-wrap">${generate(
+function wrap(ops) {
+  const html = `<!DOCTYPE html><html><body style="font-family: sans-serif; white-space: pre-wrap">${generate(
     ops
   )}</body></html>`;
+  expect(html).toHTMLValidate({
+    rules: {
+      'element-required-attributes': 'off',
+      'element-required-content': 'off',
+      'no-inline-style': 'off',
+      'wcag/h37': 'off',
+    },
+  });
+  return html;
+}
 
 describe('generate', () => {
   it('handles images', () => {

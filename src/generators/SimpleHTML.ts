@@ -53,22 +53,34 @@ export interface Options {
 /**
  * Generator that outputs HTML fragments (not entire documents) approximating
  * the visual style of Quill's Parchment formats, but with notable differences:
- *   - newlines and whitespace are preserved
+ *   - newlines are preserved
  *   - the `<div>` tag is used instead of `<p>` for paragraphs
  *   - left-aligned paragraphs are not surrounded by a tag
+ *   - adjacent paragraphs with the same alignment use the same <div> tag
+ *   - all styles are inline
+ *   - HTML tags (b, i, em, etc) are preferred to `<span style=>`
  *
- * These differences can be controlled with options.
+ * The resulting HTML fragment is minimal in size, self contained with no need
+ * for external stylesheets, and looks very similar to Quill output although
+ * structurally quite different. Make sure to display these HTML fragments in
+ * an enclosing tag with a `white-space: pre-wrap` style applied to them, else
+ * they won't look good!
+ *
+ * @example generate an HTML document that looks exactly like Quill
+ *    const fragment = generate([{insert: 'hello, world.\n'}])
+ *    const style = "-webkit-font-smoothing: antialiased; color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif"
+ *    const html = `<html><body style="${style}">${fragment}</body></html>`
  *
  * @see Options
  */
 export default class SimpleHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
-  paragraphTag: string;
+  paraTag: string;
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
   constructor({ paragraph, strict }: Options = {}) {
-    this.paragraphTag = paragraph ? paragraph.tagName : 'div';
+    this.paraTag = paragraph ? paragraph.tagName : 'div';
     this.strict = strict;
   }
 
@@ -76,7 +88,7 @@ export default class SimpleHTML implements Generator {
     const { align, list } = chunk.attributes;
     if (list === 'bullet') return '</ul>';
     else if (list === 'ordered') return '</ol>';
-    else if (align) return `</${this.paragraphTag}>`;
+    else if (align) return `</${this.paraTag}>`;
     return '';
   }
 
@@ -98,10 +110,11 @@ export default class SimpleHTML implements Generator {
       if (priorList === 'bullet') html = `</ul>${html}`;
       else if (priorList === 'ordered') html = `</ol>${html}`;
     }
-    if (!list && align != priorAlign) {
-      if (align)
-        html = `<${this.paragraphTag} style="text-align: ${align}">${html}`;
-      if (priorAlign) html = `</${this.paragraphTag}>${html}`;
+    if (!list) {
+      const open = align && align != priorAlign;
+      const close = priorAlign && !priorList && align != priorAlign;
+      if (open) html = `<${this.paraTag} style="text-align: ${align}">${html}`;
+      if (close) html = `</${this.paraTag}>${html}`;
     }
     return html;
   }
