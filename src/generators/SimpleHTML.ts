@@ -49,6 +49,17 @@ export interface Options {
   };
 }
 
+/**
+ * Generator that outputs HTML fragments (not entire documents) approximating
+ * the visual style of Quill's Parchment formats, but with notable differences:
+ *   - newlines and whitespace are preserved
+ *   - the `<div>` tag is used instead of `<p>` for paragraphs
+ *   - left-aligned paragraphs are not surrounded by a tag
+ *
+ * These differences can be controlled with options.
+ *
+ * @see Options
+ */
 export default class SimpleHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   paragraphTag: string;
@@ -56,6 +67,14 @@ export default class SimpleHTML implements Generator {
 
   constructor({ paragraph }: Options = {}) {
     this.paragraphTag = paragraph ? paragraph.tagName : 'div';
+  }
+
+  finalize(chunk: Chunk): string {
+    const { align, list } = chunk.attributes;
+    if (list === 'bullet') return '</ul>';
+    else if (list === 'ordered') return '</ol>';
+    else if (align) return `</${this.paragraphTag}>`;
+    return '';
   }
 
   /// Apply align and/or list formatting to an HTML fragment.
@@ -85,9 +104,11 @@ export default class SimpleHTML implements Generator {
   }
 
   generate(chunks: Chunk[]): string {
-    return chunks
-      .map((chunk, i) => this.generateOne(chunk, chunks[i - 1]))
-      .join('');
+    return (
+      chunks
+        .map((chunk, i) => this.generateOne(chunk, chunks[i - 1]))
+        .join('') + this.finalize(chunks[chunks.length - 1])
+    );
   }
 
   generateOne(chunk: Chunk, prior?: Chunk): string {

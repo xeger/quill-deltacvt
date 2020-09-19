@@ -30,6 +30,8 @@ export interface Chunk {
 
 /// An object that converts content chunks into another format.
 export interface Generator {
+  /// Transform chunks into an HTML fragment.
   generate(chunks: Chunk[]): string;
-  isLineFormat(format: string): boolean;
+  /// Determine whether the named attribute is a line format.
+  isLineFormat(attribute: string): boolean;
 }

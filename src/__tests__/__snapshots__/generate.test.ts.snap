@@ -7,7 +7,7 @@ exports[`generate escapes HTML syntax 1`] = `
 </li><li>not xss &amp; okay
 </li><li style=\\"text-align: center;\\">not xss &amp; okay
 
-</li></body></html>"
+</li></ul></body></html>"
 `;
 
 exports[`generate handles images 1`] = `
@@ -25,7 +25,7 @@ Right-aligned image.
 </div>
 <div style=\\"text-align: center\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 Sized and centered image.
-</body></html>"
+</div></body></html>"
 `;
 
 exports[`generate handles lists 1`] = `
@@ -45,7 +45,7 @@ exports[`generate handles lists 1`] = `
 </li></ul><ol style=\\"margin: 0px; list-style-position: inside; padding-left: 1.5rem\\"><li>dear
 </li><li>aunt
 </li><li>sally
-</li></body></html>"
+</li></ol></body></html>"
 `;
 
 exports[`generate handles standard Quill formats 1`] = `

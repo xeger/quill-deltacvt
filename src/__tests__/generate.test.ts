@@ -35,16 +35,17 @@ describe('generate', () => {
   });
 
   it('closes terminal line formats', () => {
-    expect(generate(TRIVIAL_ALIGN)).toMatch(/<\/p>$/);
+    expect(generate(LISTS)).toMatch(/<\/ol>$/);
+    expect(generate(TRIVIAL_ALIGN)).toMatch(/<\/div>$/);
     expect(generate(TRIVIAL_LIST)).toMatch(/<\/ul>$/);
   });
 
-  describe('SimpleHTML', () => {
-    test('options.paragraph', () => {
+  describe('SimpleHTML options', () => {
+    test('custom paragraph tag', () => {
       const g = new SimpleHTML({ paragraph: { tagName: 'p' } });
-      expect(generate(TRIVIAL_ALIGN, g)).toEqual(
-        '<p style="text-align: center">hi\n</p>'
-      );
+      const html = generate(TRIVIAL_ALIGN, g);
+      expect(html).toMatch(/^<p/);
+      expect(html).toMatch(/<\/p>$/);
     });
   });
 });
