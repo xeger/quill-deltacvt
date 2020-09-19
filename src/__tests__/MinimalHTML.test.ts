@@ -15,13 +15,6 @@ describe('generators/MinimalHTML', () => {
   });
 
   describe('options', () => {
-    test('paragraph.tagName', () => {
-      const g = new MinimalHTML({ paragraph: { tagName: 'p' } });
-      const html = generate(TRIVIAL_ALIGN, g);
-      expect(html).toMatch(/^<p/);
-      expect(html).toMatch(/<\/p>$/);
-    });
-
     describe('strict mode', () => {
       const g = new MinimalHTML({ strict: true });
       it('gives helpful embed messages', () => {

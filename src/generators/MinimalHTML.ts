@@ -1,13 +1,21 @@
 import { XmlEntities } from 'html-entities';
 
-import { Attributes, Chunk, Content, Generator, isText } from '../interfaces';
+import {
+  Attributes,
+  Chunk,
+  Embed,
+  Generator,
+  Text,
+  isEmbed,
+  isText,
+} from '../interfaces';
 
 export type EmbedFormatter = (
-  content: Content,
+  content: string | Record<string, string>,
   attributes: Attributes
 ) => string;
 
-export type TextFormatter = (text: string, value?: boolean | string) => string;
+export type TextFormatter = (text: Text, value?: boolean | string) => string;
 
 /**
  * Inline CSS styles for selected line formats.
@@ -44,15 +52,12 @@ const TEXTS: Record<string, TextFormatter> = {
 };
 
 export interface Options {
-  paragraph?: {
-    tagName: string;
-  };
   strict?: true;
 }
 
 /**
- * Generator that outputs HTML fragments (not entire documents) approximating
- * the visual style of Quill's Parchment formats, but with notable differences:
+ * Generator that outputs HTML approximating the visual style of Quill's
+ * Parchment formats, but with notable differences:
  *   - newlines are preserved
  *   - the `<div>` tag is used instead of `<p>` for paragraphs
  *   - left-aligned paragraphs are not surrounded by a tag
@@ -60,27 +65,16 @@ export interface Options {
  *   - all styles are inline
  *   - HTML tags (b, i, em, etc) are preferred to `<span style=>`
  *
- * The resulting HTML fragment is minimal in size, self contained with no need
- * for external stylesheets, and looks very similar to Quill output although
- * structurally quite different. Make sure to display these HTML fragments in
- * an enclosing tag with a `white-space: pre-wrap` style applied to them, else
- * they won't look good!
- *
- * @example generate an HTML document that looks exactly like Quill
- *    const fragment = generate([{insert: 'hello, world.\n'}])
- *    const style = "-webkit-font-smoothing: antialiased; color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif"
- *    const html = `<html><body style="${style}">${fragment}</body></html>`
- *
- * @see Options
+ * The resulting HTML is minimal in size, self contained with no need
+ * for external stylesheets, minimally influenced by user-agent stylesheets,
+ * and looks very similar to Quill output although structurally quite different.
  */
 export default class MinimalHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
-  paraTag: string;
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
-  constructor({ paragraph, strict }: Options = {}) {
-    this.paraTag = paragraph ? paragraph.tagName : 'div';
+  constructor({ strict }: Options = {}) {
     this.strict = strict;
   }
 
@@ -88,7 +82,7 @@ export default class MinimalHTML implements Generator {
     const { align, list } = chunk.attributes;
     if (list === 'bullet') return '</ul>';
     else if (list === 'ordered') return '</ol>';
-    else if (align) return `</${this.paraTag}>`;
+    else if (align) return `</div>`;
     return '';
   }
 
@@ -113,8 +107,8 @@ export default class MinimalHTML implements Generator {
     if (!list) {
       const open = align && align != priorAlign;
       const close = priorAlign && !priorList && align != priorAlign;
-      if (open) html = `<${this.paraTag} style="text-align: ${align}">${html}`;
-      if (close) html = `</${this.paraTag}>${html}`;
+      if (open) html = `<div style="text-align: ${align}">${html}`;
+      if (close) html = `</div>${html}`;
     }
     return html;
   }
@@ -129,13 +123,14 @@ export default class MinimalHTML implements Generator {
 
   generateOne(chunk: Chunk, prior?: Chunk): string {
     let html = '';
+    const { attributes, content } = chunk;
 
-    if (isText(chunk.content)) {
-      html = XmlEntities.encode(chunk.content);
-    } else {
-      const key = Object.keys(chunk.content)[0];
+    if (isText(content)) {
+      html = XmlEntities.encode(content);
+    } else if (isEmbed(content)) {
+      const key = Object.keys(content)[0];
       if (this.embedFormatters[key])
-        html = this.embedFormatters[key](chunk.content[key], chunk.attributes);
+        html = this.embedFormatters[key](content[key], attributes);
       else {
         if (this.strict) throw new Error(`Unknown embed: ${key}`);
         else html = '';
@@ -143,11 +138,11 @@ export default class MinimalHTML implements Generator {
     }
 
     Object.keys(this.textFormatters).forEach((k) => {
-      const attr = chunk.attributes[k];
+      const attr = attributes[k];
       if (attr) html = this.textFormatters[k](html, attr);
     });
     if (this.strict)
-      Object.keys(chunk.attributes).forEach((k) => {
+      Object.keys(attributes).forEach((k) => {
         if (!this.textFormatters[k]) throw new Error(`Unknown attribute: ${k}`);
       });
 
