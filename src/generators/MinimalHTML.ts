@@ -73,7 +73,7 @@ export interface Options {
  *
  * @see Options
  */
-export default class SimpleHTML implements Generator {
+export default class MinimalHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   paraTag: string;
   strict?: true;

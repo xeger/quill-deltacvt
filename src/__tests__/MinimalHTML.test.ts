@@ -1,29 +1,29 @@
 import { TRIVIAL_ALIGN } from '../../test/fixtures';
 
 import { generate } from '..';
-import SimpleHTML from '../generators/SimpleHTML';
+import MinimalHTML from '../generators/MinimalHTML';
 
 const UNKNOWN_ATTRIBUTE = [{ attributes: { banana: true }, insert: 'hi' }];
 
 const UNKNOWN_EMBED = [{ insert: { banana: 'banana' } }];
 
-describe('SimpleHTML', () => {
+describe('generators/MinimalHTML', () => {
   it('handles unknown content', () => {
-    const g = new SimpleHTML();
+    const g = new MinimalHTML();
     expect(generate(UNKNOWN_ATTRIBUTE, g)).toEqual('hi');
     expect(generate(UNKNOWN_EMBED, g)).toEqual('');
   });
 
   describe('options', () => {
     test('paragraph.tagName', () => {
-      const g = new SimpleHTML({ paragraph: { tagName: 'p' } });
+      const g = new MinimalHTML({ paragraph: { tagName: 'p' } });
       const html = generate(TRIVIAL_ALIGN, g);
       expect(html).toMatch(/^<p/);
       expect(html).toMatch(/<\/p>$/);
     });
 
     describe('strict mode', () => {
-      const g = new SimpleHTML({ strict: true });
+      const g = new MinimalHTML({ strict: true });
       it('gives helpful embed messages', () => {
         expect(() => generate(UNKNOWN_EMBED, g)).toThrowError(
           'Unknown embed: banana'

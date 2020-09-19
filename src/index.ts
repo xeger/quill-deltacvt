@@ -1,4 +1,4 @@
-import SimpleHTML from './generators/SimpleHTML';
+import MinimalHTML from './generators/MinimalHTML';
 import {
   Attributes,
   Chunk as IChunk,
@@ -66,7 +66,7 @@ class Chunk implements IChunk {
 
 export function generate(
   ops: Op[],
-  g: Generator = new generators.SimpleHTML()
+  g: Generator = new generators.MinimalHTML()
 ): string {
   const chunks: Chunk[] = [];
 
@@ -97,4 +97,4 @@ export function generate(
   return g.generate(chunks);
 }
 
-export const generators = { SimpleHTML };
+export const generators = { MinimalHTML };
