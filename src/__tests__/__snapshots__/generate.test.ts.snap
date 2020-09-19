@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generate escapes HTML syntax 1`] = `
-"<!DOCTYPE html><html><body style=\\"font-family: sans-serif; white-space: pre-wrap\\">&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+"<!DOCTYPE html><html><body style=\\"color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif\\">&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
 <ul style=\\"margin: 0px; list-style-position: inside; padding-left: 1.5rem\\"><li>&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
 </li><li style=\\"text-align: right;\\">&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
 </li><li>not xss &amp; okay
@@ -11,7 +11,7 @@ exports[`generate escapes HTML syntax 1`] = `
 `;
 
 exports[`generate handles images 1`] = `
-"<!DOCTYPE html><html><body style=\\"font-family: sans-serif; white-space: pre-wrap\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
+"<!DOCTYPE html><html><body style=\\"color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 Sized image.
 
 <img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>
@@ -29,7 +29,7 @@ Sized and centered image.
 `;
 
 exports[`generate handles lists 1`] = `
-"<!DOCTYPE html><html><body style=\\"font-family: sans-serif; white-space: pre-wrap\\">Normal text to start.
+"<!DOCTYPE html><html><body style=\\"color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif\\">Normal text to start.
 <ul style=\\"margin: 0px; list-style-position: inside; padding-left: 1.5rem\\"><li>chalk
 </li><li>
 </li><li>cheese
@@ -49,7 +49,7 @@ exports[`generate handles lists 1`] = `
 `;
 
 exports[`generate handles standard Quill formats 1`] = `
-"<!DOCTYPE html><html><body style=\\"font-family: sans-serif; white-space: pre-wrap\\">Plain.  <b>Bold. </b><i>Italic. </i><u>Underline.</u> <span style=\\"color: #9933ff\\">Colored.</span> <a href=\\"https://quilljs.com\\">Link.</a>
+"<!DOCTYPE html><html><body style=\\"color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif\\">Plain.  <b>Bold. </b><i>Italic. </i><u>Underline.</u> <span style=\\"color: #9933ff\\">Colored.</span> <a href=\\"https://quilljs.com\\">Link.</a>
 <span style=\\"font-size: x-small\\">Small, </span>normal, <span style=\\"font-size: x-large\\">large, </span><span style=\\"font-size: xx-large\\">huge!</span>
 Left aligned.
 Left <b>aligned</b> with <u><i>some</i></u> <span style=\\"color: #e60000\\">formatting</span>.

@@ -64,7 +64,12 @@ class Chunk implements IChunk {
   }
 }
 
-export function generate(
+/**
+ * Transform Quill Delta operations into a document fragment.
+ *
+ * @see MinimalHTML for a description of the default generator
+ */
+export function generateFragment(
   ops: Op[],
   g: Generator = new generators.MinimalHTML()
 ): string {
@@ -95,6 +100,18 @@ export function generate(
   });
 
   return g.generate(chunks);
+}
+
+/**
+ * Transform Quill Delta operations into a complete document.
+ *
+ * @see MinimalHTML for a description of the default generator
+ */
+export function generate(
+  ops: Op[],
+  g: Generator = new generators.MinimalHTML()
+): string {
+  return g.wrap(generateFragment(ops, g));
 }
 
 export const generators = { MinimalHTML };

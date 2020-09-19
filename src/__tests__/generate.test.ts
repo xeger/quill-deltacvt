@@ -12,11 +12,9 @@ import * as visual from './visual';
 
 import { generate } from '../index';
 
-// For visual comparison, turn generated fragments into proper HTML documents.
-function wrap(ops) {
-  const html = `<!DOCTYPE html><html><body style="font-family: sans-serif; white-space: pre-wrap">${generate(
-    ops
-  )}</body></html>`;
+// Generate and validate HTML from ops.
+function genHTML(ops) {
+  const html = generate(ops);
   expect(html).toHTMLValidate({
     rules: {
       'element-required-attributes': 'off',
@@ -30,24 +28,18 @@ function wrap(ops) {
 
 describe('generate', () => {
   it('handles images', () => {
-    visual.matchSnapshot(wrap(IMAGES));
+    visual.matchSnapshot(genHTML(IMAGES));
   });
 
   it('escapes HTML syntax', () => {
-    visual.matchSnapshot(wrap(MALICIOUS));
+    visual.matchSnapshot(genHTML(MALICIOUS));
   });
 
   it('handles lists', () => {
-    visual.matchSnapshot(wrap(LISTS));
+    visual.matchSnapshot(genHTML(LISTS));
   });
 
   it('handles standard Quill formats', () => {
-    visual.matchSnapshot(wrap(SMORGASBORD));
-  });
-
-  it('closes terminal line formats', () => {
-    expect(generate(LISTS)).toMatch(/<\/ol>$/);
-    expect(generate(TRIVIAL_ALIGN)).toMatch(/<\/div>$/);
-    expect(generate(TRIVIAL_LIST)).toMatch(/<\/ul>$/);
+    visual.matchSnapshot(genHTML(SMORGASBORD));
   });
 });

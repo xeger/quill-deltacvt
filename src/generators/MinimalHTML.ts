@@ -17,10 +17,13 @@ export type EmbedFormatter = (
 
 export type TextFormatter = (text: Text, value?: boolean | string) => string;
 
+const BODY_STYLE =
+  'color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif';
+
 /**
  * Inline CSS styles for selected line formats.
  */
-const lineStyles = {
+const LINE_STYLES = {
   list: 'margin: 0px; list-style-position: inside; padding-left: 1.5rem',
 };
 
@@ -67,7 +70,11 @@ export interface Options {
  *
  * The resulting HTML is minimal in size, self contained with no need
  * for external stylesheets, minimally influenced by user-agent stylesheets,
- * and looks very similar to Quill output although structurally quite different.
+ * and looks visually similar to Quill output in modern browsers, although
+ * structurally quite different
+ *
+ * If you generate fragments, make sure to apply a `white-space: pre-wrap` to
+ * an enclosing tag, else the HTML will not look right at all!
  */
 export default class MinimalHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
@@ -97,9 +104,9 @@ export default class MinimalHTML implements Generator {
     }
     if (list != priorList) {
       if (list) {
-        if (list === 'bullet') html = `<ul style="${lineStyles.list}">${html}`;
+        if (list === 'bullet') html = `<ul style="${LINE_STYLES.list}">${html}`;
         else if (list === 'ordered')
-          html = `<ol style="${lineStyles.list}">${html}`;
+          html = `<ol style="${LINE_STYLES.list}">${html}`;
       }
       if (priorList === 'bullet') html = `</ul>${html}`;
       else if (priorList === 'ordered') html = `</ol>${html}`;
@@ -158,5 +165,9 @@ export default class MinimalHTML implements Generator {
       default:
         return false;
     }
+  }
+
+  wrap(fragment: string): string {
+    return `<!DOCTYPE html><html><body style="${BODY_STYLE}">${fragment}</body></html>`;
   }
 }
