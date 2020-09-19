@@ -5,7 +5,8 @@ export type Attributes = Record<string, boolean | string>;
 export type Content = Embed | Text;
 
 /// Standalone representation of a Quill DeltaOperation.
-export interface DeltaOperation {
+/// @see https://github.com/quilljs/delta/blob/master/src/Op.ts
+export interface Op {
   attributes?: Attributes;
   insert: Content;
 }

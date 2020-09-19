@@ -9,10 +9,6 @@ export type EmbedFormatter = (
 
 export type TextFormatter = (text: string, value?: boolean | string) => string;
 
-const ENCLOSING_TAG = 'div';
-
-const ENCLOSING_STYLE = 'font-family: sans-serif; white-space: pre-wrap';
-
 /**
  * Inline CSS styles for selected line formats.
  */
@@ -47,10 +43,6 @@ const TEXT_FORMATS: Record<string, TextFormatter> = {
 };
 
 export interface Options {
-  enclosing?: {
-    style: string;
-    tag: string | null;
-  };
   paragraph?: {
     tag: string;
   };
@@ -58,14 +50,10 @@ export interface Options {
 
 export default class SimpleHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBED_FORMATS };
-  enclosingTag: string | null;
-  enclosingStyle: string;
   paragraphTag: string;
   textFormatters: Record<string, TextFormatter> = { ...TEXT_FORMATS };
 
-  constructor({ enclosing, paragraph }: Options = {}) {
-    this.enclosingTag = enclosing ? enclosing.tag : ENCLOSING_TAG;
-    this.enclosingStyle = enclosing ? enclosing.style : ENCLOSING_STYLE;
+  constructor({ paragraph }: Options = {}) {
     this.paragraphTag = paragraph ? paragraph.tag : 'div';
   }
 
@@ -96,9 +84,9 @@ export default class SimpleHTML implements Generator {
   }
 
   generate(chunks: Chunk[]): string {
-    return this.wrap(
-      chunks.map((chunk, i) => this.generateOne(chunk, chunks[i - 1])).join('')
-    );
+    return chunks
+      .map((chunk, i) => this.generateOne(chunk, chunks[i - 1]))
+      .join('');
   }
 
   generateOne(chunk: Chunk, prior?: Chunk): string {
@@ -130,15 +118,5 @@ export default class SimpleHTML implements Generator {
       default:
         return false;
     }
-  }
-
-  wrap(html: string): string {
-    if (this.enclosingTag) {
-      const styleAttr = this.enclosingStyle
-        ? ` style="${this.enclosingStyle}"`
-        : '';
-      html = `<${this.enclosingTag}${styleAttr}>${html}</${this.enclosingTag}>`;
-    }
-    return html;
   }
 }

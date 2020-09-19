@@ -4,7 +4,7 @@ import {
   Chunk as IChunk,
   Content,
   Embed,
-  DeltaOperation,
+  Op,
   Generator,
   isText,
 } from './interfaces';
@@ -65,7 +65,7 @@ class Chunk implements IChunk {
 }
 
 export function generate(
-  ops: DeltaOperation[],
+  ops: Op[],
   g: Generator = new generators.SimpleHTML()
 ): string {
   const chunks: Chunk[] = [];

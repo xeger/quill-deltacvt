@@ -1,8 +1,12 @@
 import { IMAGES, LISTS, MALICIOUS, SMORGASBORD } from './fixtures';
 import * as visual from './visual';
 
-import { generate } from '../index';
+import { generate as realGenerate } from '../index';
 import SimpleHTML from '../generators/SimpleHTML';
+
+const wrap = (html: string) =>
+  `<div style="font-family: sans-serif; white-space: pre-wrap">${html}</div>`;
+const generate = (ops) => wrap(realGenerate(ops));
 
 describe('generate', () => {
   it('handles images', () => {
@@ -22,21 +26,6 @@ describe('generate', () => {
   });
 
   describe('SimpleHTML', () => {
-    describe('options.enclosing', () => {
-      test('custom tag & style', () => {
-        const g = new SimpleHTML({
-          enclosing: { tag: 'body', style: 'color: red' },
-        });
-        expect(generate([], g)).toEqual('<body style="color: red"></body>');
-      });
-      test('no tag', () => {
-        const g = new SimpleHTML({ enclosing: { tag: null, style: '' } });
-        expect(generate([], g)).toEqual('');
-      });
-      test('no style', () => {
-        const g = new SimpleHTML({ enclosing: { tag: 'div', style: '' } });
-        expect(generate([], g)).toEqual('<div></div>');
-      });
-    });
+    // TODO: options.paragraph
   });
 });
