@@ -1,0 +1,11 @@
+[
+  {
+    "insert": "hi"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  }
+]

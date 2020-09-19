@@ -75,7 +75,7 @@ export function generate(
     let { insert } = op;
 
     if (hasLineFormats(attributes, g) && isText(insert)) {
-      for (let j = chunks.length - 1; !chunks[j].hasNewline(); j--)
+      for (let j = chunks.length - 1; chunks[j] && !chunks[j].hasNewline(); j--)
         chunks[j].applyLineFrom(attributes, g);
       const priorChunk = chunks[chunks.length - 1];
       if (priorChunk && isText(priorChunk.content) && isText(insert)) {

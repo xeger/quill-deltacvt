@@ -1,0 +1,11 @@
+[
+  {
+    "insert": "hi"
+  },
+  {
+    "attributes": {
+      "align": "center"
+    },
+    "insert": "\n"
+  }
+]

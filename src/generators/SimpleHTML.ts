@@ -20,7 +20,7 @@ const lineStyles = {
  * HTML generators for non-textual content (e.g. images)
  * in a chunk.
  */
-const EMBED_FORMATS: Record<string, EmbedFormatter> = {
+const EMBEDS: Record<string, EmbedFormatter> = {
   image(src, attributes) {
     const { width, height } = attributes;
     const optWidth = width ? ` width="${width}"` : '';
@@ -31,9 +31,10 @@ const EMBED_FORMATS: Record<string, EmbedFormatter> = {
 };
 
 /**
- * HTML generators for character formats.
+ * HTML generators for character formats. Line formats are context-sensitive
+ * and need to be handled as part of the generation algorithm.
  */
-const TEXT_FORMATS: Record<string, TextFormatter> = {
+const TEXTS: Record<string, TextFormatter> = {
   bold: (text) => `<b>${text}</b>`,
   color: (text, color) => `<span style="color: ${color}">${text}</span>`,
   italic: (text) => `<i>${text}</i>`,
@@ -44,17 +45,17 @@ const TEXT_FORMATS: Record<string, TextFormatter> = {
 
 export interface Options {
   paragraph?: {
-    tag: string;
+    tagName: string;
   };
 }
 
 export default class SimpleHTML implements Generator {
-  embedFormatters: Record<string, EmbedFormatter> = { ...EMBED_FORMATS };
+  embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   paragraphTag: string;
-  textFormatters: Record<string, TextFormatter> = { ...TEXT_FORMATS };
+  textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
   constructor({ paragraph }: Options = {}) {
-    this.paragraphTag = paragraph ? paragraph.tag : 'div';
+    this.paragraphTag = paragraph ? paragraph.tagName : 'div';
   }
 
   /// Apply align and/or list formatting to an HTML fragment.
