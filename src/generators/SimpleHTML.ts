@@ -47,6 +47,7 @@ export interface Options {
   paragraph?: {
     tagName: string;
   };
+  strict?: true;
 }
 
 /**
@@ -63,10 +64,12 @@ export interface Options {
 export default class SimpleHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   paragraphTag: string;
+  strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
-  constructor({ paragraph }: Options = {}) {
+  constructor({ paragraph, strict }: Options = {}) {
     this.paragraphTag = paragraph ? paragraph.tagName : 'div';
+    this.strict = strict;
   }
 
   finalize(chunk: Chunk): string {
@@ -120,13 +123,20 @@ export default class SimpleHTML implements Generator {
       const key = Object.keys(chunk.content)[0];
       if (this.embedFormatters[key])
         html = this.embedFormatters[key](chunk.content[key], chunk.attributes);
-      else throw new Error(`Unrecognized embed: ${chunk.content}`);
+      else {
+        if (this.strict) throw new Error(`Unknown embed: ${key}`);
+        else html = '';
+      }
     }
 
     Object.keys(this.textFormatters).forEach((k) => {
       const attr = chunk.attributes[k];
       if (attr) html = this.textFormatters[k](html, attr);
     });
+    if (this.strict)
+      Object.keys(chunk.attributes).forEach((k) => {
+        if (!this.textFormatters[k]) throw new Error(`Unknown attribute: ${k}`);
+      });
 
     html = this.formatLines(html, chunk, prior);
     return html;

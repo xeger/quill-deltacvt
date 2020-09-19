@@ -9,7 +9,6 @@ import {
 import * as visual from './visual';
 
 import { generate } from '../index';
-import SimpleHTML from '../generators/SimpleHTML';
 
 // For visual comparison, turn generated fragments into proper HTML documents.
 const wrap = (ops) =>
@@ -38,14 +37,5 @@ describe('generate', () => {
     expect(generate(LISTS)).toMatch(/<\/ol>$/);
     expect(generate(TRIVIAL_ALIGN)).toMatch(/<\/div>$/);
     expect(generate(TRIVIAL_LIST)).toMatch(/<\/ul>$/);
-  });
-
-  describe('SimpleHTML options', () => {
-    test('custom paragraph tag', () => {
-      const g = new SimpleHTML({ paragraph: { tagName: 'p' } });
-      const html = generate(TRIVIAL_ALIGN, g);
-      expect(html).toMatch(/^<p/);
-      expect(html).toMatch(/<\/p>$/);
-    });
   });
 });
