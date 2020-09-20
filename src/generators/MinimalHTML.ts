@@ -86,10 +86,12 @@ export default class MinimalHTML implements Generator {
   }
 
   finalize(chunk: Chunk): string {
-    const { align, list } = chunk.attributes;
-    if (list === 'bullet') return '</ul>';
-    else if (list === 'ordered') return '</ol>';
-    else if (align) return `</div>`;
+    if (chunk) {
+      const { align, list } = chunk.attributes;
+      if (list === 'bullet') return '</ul>';
+      else if (list === 'ordered') return '</ol>';
+      else if (align) return `</div>`;
+    }
     return '';
   }
 

@@ -39,7 +39,15 @@ describe('generate', () => {
     visual.matchSnapshot(genHTML(LISTS));
   });
 
-  it('handles standard Quill formats', () => {
+  it('handles trivial inputs', () => {
+    visual.matchSnapshot(genHTML(TRIVIAL_LIST));
+  });
+
+  it.only('handles standard Quill formats', () => {
     visual.matchSnapshot(genHTML(SMORGASBORD));
+  });
+
+  it('handles trivial aligned text', () => {
+    visual.matchSnapshot(genHTML(TRIVIAL_ALIGN));
   });
 });
