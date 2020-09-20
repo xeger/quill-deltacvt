@@ -1,21 +1,13 @@
 import { XmlEntities } from 'html-entities';
 
-import {
-  Attributes,
-  Chunk,
-  Embed,
-  Generator,
-  Text,
-  isEmbed,
-  isText,
-} from '../interfaces';
+import { Attributes, Chunk, Generator, isEmbed, isText } from '../interfaces';
 
 export type EmbedFormatter = (
   content: string | Record<string, string>,
   attributes: Attributes
 ) => string;
 
-export type TextFormatter = (text: Text, value?: boolean | string) => string;
+export type TextFormatter = (text: string, value?: boolean | string) => string;
 
 const BODY_STYLE =
   'color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif';

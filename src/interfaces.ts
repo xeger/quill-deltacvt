@@ -2,7 +2,7 @@
 export type Attributes = Record<string, boolean | string>;
 
 /// A piece of Quill content.
-export type Content = Embed | Text;
+export type Content = string | Embed;
 
 /// Standalone representation of a Quill DeltaOperation.
 /// @see https://github.com/quilljs/delta/blob/master/src/Op.ts
@@ -16,14 +16,11 @@ export interface Op {
 /// (image, etc)
 export type Embed = { [k: string]: string | Record<string, string> };
 
-/// A piece of textual Quill content.
-export type Text = string;
-
 /// Type discriminator for embedded Content.
 export const isEmbed = (o: unknown): o is Embed => typeof o === 'object' && !!o;
 
 /// Type discriminator for textual Content.
-export const isText = (o: unknown): o is Text => typeof o === 'string';
+export const isText = (o: unknown): o is string => typeof o === 'string';
 
 /// Self-contained piece of Quill content that has been normalized to include
 /// all applicable line and character formats and to contain at most one newline

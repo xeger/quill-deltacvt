@@ -115,3 +115,4 @@ export function generate(
 }
 
 export const generators = { MinimalHTML };
+export { Attributes, Content, Embed, Op };
