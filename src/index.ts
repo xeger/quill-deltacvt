@@ -9,6 +9,8 @@ import {
   isText,
 } from './interfaces';
 
+export type { Attributes, Content, Embed, Op };
+
 const hasLineFormats = (attr: Attributes, g: Generator) =>
   Object.keys(attr).some(g.isLineFormat);
 
@@ -115,4 +117,3 @@ export function generate(
 }
 
 export const generators = { MinimalHTML };
-export { Attributes, Content, Embed, Op };
