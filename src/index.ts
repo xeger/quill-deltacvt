@@ -3,10 +3,8 @@ import {
   Attributes,
   Chunk as IChunk,
   Content,
-  Embed,
   Op,
   Generator,
-  isEmbed,
   isText,
 } from './interfaces';
 
@@ -81,6 +79,9 @@ export function generateFragment(
   const chunks: Chunk[] = [];
 
   ops.forEach((op) => {
+    if (op.insert === undefined)
+      throw new Error(`Unsupported quill-delta Op: ${JSON.stringify(op)}`);
+
     const { attributes = {} } = op;
     let { insert } = op;
 
@@ -94,11 +95,7 @@ export function generateFragment(
       }
     }
 
-    const lines: Content[] = isText(insert)
-      ? splitLines(insert)
-      : isEmbed(insert)
-      ? [insert]
-      : [];
+    const lines: Content[] = isText(insert) ? splitLines(insert) : [insert];
 
     lines.forEach((line) => {
       const chunk = new Chunk(line);

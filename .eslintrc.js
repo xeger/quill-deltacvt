@@ -26,6 +26,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/array-type': 'warn',
+    '@typescript-eslint/ban-types': ['error', { types: { object: false } }],
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',

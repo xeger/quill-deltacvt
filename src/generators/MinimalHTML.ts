@@ -136,6 +136,10 @@ export default class MinimalHTML implements Generator {
         if (this.strict) throw new Error(`Unknown embed: ${key}`);
         else html = '';
       }
+    } else {
+      if (this.strict)
+        throw new Error(`Unknown insert type: ${typeof content}`);
+      else html = '';
     }
 
     Object.keys(this.textFormatters).forEach((k) => {

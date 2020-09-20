@@ -2,7 +2,7 @@
 export type Attributes = Record<string, boolean | string>;
 
 /// A piece of Quill content.
-export type Content = string | Embed;
+export type Content = string | object;
 
 /// Standalone representation of a Quill DeltaOperation.
 /// @see https://github.com/quilljs/delta/blob/master/src/Op.ts
@@ -11,13 +11,9 @@ export interface Op {
   insert?: Content;
 }
 
-/// A piece of Quill content that isn't text (e.g. image, video).
-/// It always has exactly one key, identifying the type of embed
-/// (image, etc)
-export type Embed = { [k: string]: string | Record<string, string> };
-
 /// Type discriminator for embedded Content.
-export const isEmbed = (o: unknown): o is Embed => typeof o === 'object' && !!o;
+export const isEmbed = (o: unknown): o is object =>
+  typeof o === 'object' && !!o;
 
 /// Type discriminator for textual Content.
 export const isText = (o: unknown): o is string => typeof o === 'string';

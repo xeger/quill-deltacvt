@@ -33,6 +33,7 @@
     "jest": "^26.4.2",
     "jsdom": "^16.4.0",
     "prettier": "^2.1.2",
+    "quill-delta": "^4.2.2",
     "rollup": "^2.27.1",
     "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
