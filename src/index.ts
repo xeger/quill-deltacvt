@@ -9,7 +9,7 @@ import {
   isText,
 } from './interfaces';
 
-export type { Attributes, Content, Embed, Op };
+export * from './interfaces';
 
 const hasLineFormats = (attr: Attributes, g: Generator) =>
   Object.keys(attr).some(g.isLineFormat);

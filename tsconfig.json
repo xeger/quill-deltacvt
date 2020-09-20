@@ -1,5 +1,7 @@
 {
   "exclude": [
+    "dist",
+    "lib",
     "src/**/__tests__/*",
     "test/**/*"
   ],
