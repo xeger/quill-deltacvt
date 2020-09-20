@@ -8,7 +8,7 @@ export type Content = string | Embed;
 /// @see https://github.com/quilljs/delta/blob/master/src/Op.ts
 export interface Op {
   attributes?: Attributes;
-  insert: Content;
+  insert?: Content;
 }
 
 /// A piece of Quill content that isn't text (e.g. image, video).

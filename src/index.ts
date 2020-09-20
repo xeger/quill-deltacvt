@@ -6,6 +6,7 @@ import {
   Embed,
   Op,
   Generator,
+  isEmbed,
   isText,
 } from './interfaces';
 
@@ -75,6 +76,8 @@ export function generateFragment(
   ops: Op[],
   g: Generator = new generators.MinimalHTML()
 ): string {
+  if (!ops) return '';
+
   const chunks: Chunk[] = [];
 
   ops.forEach((op) => {
@@ -91,9 +94,12 @@ export function generateFragment(
       }
     }
 
-    const lines: (string | Embed)[] = isText(insert)
+    const lines: Content[] = isText(insert)
       ? splitLines(insert)
-      : [insert];
+      : isEmbed(insert)
+      ? [insert]
+      : [];
+
     lines.forEach((line) => {
       const chunk = new Chunk(line);
       chunk.applyFrom(attributes);

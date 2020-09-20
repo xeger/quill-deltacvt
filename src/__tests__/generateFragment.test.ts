@@ -5,13 +5,17 @@ describe('generateFragment', () => {
     expect(generateFragment([{ insert: '\n' }])).toEqual('\n');
   });
 
-  // These are all illegal Quill deltas, but common enough
+  // These are all invalid Quill deltas, but common enough
   // that we shouldn't crash!
-  it('handles malformed inputs', () => {
-    expect(() => {
-      generateFragment([]);
-      generateFragment([]);
-      generateFragment([{ insert: '' }]);
-    }).not.toThrow();
+  it('tolerates malformed deltas', () => {
+    expect(generateFragment(undefined as any)).toEqual('');
+    expect(generateFragment(null as any)).toEqual('');
+    expect(generateFragment([])).toEqual('');
+    expect(generateFragment([{ insert: '' }])).toEqual('');
+  });
+
+  it('tolerates non-normalized deltas', () => {
+    expect(generateFragment([{}])).toEqual('');
+    expect(generateFragment([{ retain: 4 } as any])).toEqual('');
   });
 });
