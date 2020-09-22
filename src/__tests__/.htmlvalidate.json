@@ -3,6 +3,7 @@
     "element-required-attributes": "off",
     "element-required-content": "off",
     "no-inline-style": "off",
+    "no-trailing-whitespace": "off",
     "wcag/h37": "off"
   }
 }

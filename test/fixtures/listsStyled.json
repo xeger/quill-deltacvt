@@ -1,0 +1,81 @@
+[
+  {
+    "attributes": {
+      "underline": true,
+      "bold": true
+    },
+    "insert": "lots"
+  },
+  {
+    "insert": " "
+  },
+  {
+    "attributes": {
+      "color": "#9933ff"
+    },
+    "insert": "of"
+  },
+  {
+    "insert": " "
+  },
+  {
+    "attributes": {
+      "underline": true,
+      "italic": true,
+      "bold": true,
+      "link": "http://google.com"
+    },
+    "insert": "style"
+  },
+  {
+    "insert": " "
+  },
+  {
+    "attributes": {
+      "italic": true
+    },
+    "insert": "happening"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "lots "
+  },
+  {
+    "attributes": {
+      "bold": true
+    },
+    "insert": "of"
+  },
+  {
+    "insert": " "
+  },
+  {
+    "attributes": {
+      "color": "#e60000"
+    },
+    "insert": "function"
+  },
+  {
+    "insert": " too"
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  },
+  {
+    "insert": "gotta love it all "
+  },
+  {
+    "attributes": {
+      "list": "bullet"
+    },
+    "insert": "\n"
+  }
+]

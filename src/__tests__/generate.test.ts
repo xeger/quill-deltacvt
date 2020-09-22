@@ -1,7 +1,8 @@
 import 'html-validate/jest';
 
 import { generate } from '../index';
-import { TRIVIAL, NullGenerator } from '../../test/fixtures';
+import { TRIVIAL } from '../../test/fixtures';
+import { NullGenerator } from '../../test/implementations';
 
 describe('generate', () => {
   it('accepts custom generators', () => {

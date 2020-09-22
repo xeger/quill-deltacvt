@@ -6,6 +6,7 @@ import MinimalHTML from '../generators/MinimalHTML';
 import {
   IMAGES,
   LISTS,
+  LISTS_STYLED,
   MALICIOUS,
   SMORGASBORD,
   TRIVIAL_ALIGN,
@@ -42,6 +43,10 @@ describe('generators/MinimalHTML', () => {
 
     it('handles lists', () => {
       visual.matchSnapshot(genHTML(LISTS));
+    });
+
+    it('handles styled lists', () => {
+      visual.matchSnapshot(genHTML(LISTS_STYLED));
     });
 
     it('handles trivial inputs', () => {
