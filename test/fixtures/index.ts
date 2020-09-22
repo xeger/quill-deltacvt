@@ -1,4 +1,4 @@
-import { Op } from '../../src/interfaces';
+import { Generator, Op } from '../../src/interfaces';
 
 import images from './images.json';
 import lists from './lists.json';
@@ -15,3 +15,15 @@ export const SMORGASBORD = smorgasbord as Op[];
 export const TRIVIAL = trivial as Op[];
 export const TRIVIAL_ALIGN = trivialAlign as Op[];
 export const TRIVIAL_LIST = trivialList as Op[];
+
+export class NullGenerator implements Generator {
+  generate(): string {
+    return '';
+  }
+  isLineFormat(): boolean {
+    return false;
+  }
+  wrap(): string {
+    return '';
+  }
+}

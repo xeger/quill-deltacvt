@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "element-required-attributes": "off",
+    "element-required-content": "off",
+    "no-inline-style": "off",
+    "wcag/h37": "off"
+  }
+}

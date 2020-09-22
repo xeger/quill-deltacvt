@@ -1,6 +1,11 @@
 import { generateFragment } from '../index';
+import { TRIVIAL, NullGenerator } from '../../test/fixtures';
 
 describe('generateFragment', () => {
+  it('accepts custom generators', () => {
+    expect(generateFragment(TRIVIAL, new NullGenerator())).toEqual('');
+  });
+
   it('omits HTML, BODY, eyc', () => {
     expect(generateFragment([{ insert: '\n' }])).toEqual('\n');
   });
