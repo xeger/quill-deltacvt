@@ -1,6 +1,13 @@
 import { XmlEntities } from 'html-entities';
 
-import { Attributes, Chunk, Generator, isEmbed, isText } from '../interfaces';
+import {
+  Attributes,
+  Content,
+  Chunk,
+  Generator,
+  isEmbed,
+  isText,
+} from '../interfaces';
 
 export type EmbedFormatter = (
   content: string | Record<string, string>,
@@ -50,6 +57,12 @@ export interface Options {
   strict?: true;
 }
 
+interface Line {
+  align?: string;
+  list?: string;
+  text: string;
+}
+
 /**
  * Generator that outputs HTML approximating the visual style of Quill's
  * Parchment formats, but with notable differences:
@@ -77,54 +90,8 @@ export default class MinimalHTML implements Generator {
     this.strict = strict;
   }
 
-  finalize(chunk: Chunk): string {
-    if (chunk) {
-      const { align, list } = chunk.attributes;
-      if (list === 'bullet') return '</ul>';
-      else if (list === 'ordered') return '</ol>';
-      else if (align) return `</div>`;
-    }
-    return '';
-  }
-
-  /// Apply align and/or list formatting to an HTML fragment.
-  formatLines(html: string, chunk: Chunk, prior?: Chunk): string {
-    const { align, list } = chunk.attributes;
-    const priorAlign = prior && prior.attributes.align;
-    const priorList = prior && prior.attributes.list;
-    if (list) {
-      const style = align ? ` style="text-align: ${align};"` : '';
-      html = `<li${style}>${html}</li>`;
-    }
-    if (list != priorList) {
-      if (list) {
-        if (list === 'bullet') html = `<ul style="${LINE_STYLES.list}">${html}`;
-        else if (list === 'ordered')
-          html = `<ol style="${LINE_STYLES.list}">${html}`;
-      }
-      if (priorList === 'bullet') html = `</ul>${html}`;
-      else if (priorList === 'ordered') html = `</ol>${html}`;
-    }
-    if (!list) {
-      const open = align && align != priorAlign;
-      const close = priorAlign && !priorList && align != priorAlign;
-      if (open) html = `<div style="text-align: ${align}">${html}`;
-      if (close) html = `</div>${html}`;
-    }
-    return html;
-  }
-
-  generate(chunks: Chunk[]): string {
-    return (
-      chunks
-        .map((chunk, i) => this.generateOne(chunk, chunks[i - 1]))
-        .join('') + this.finalize(chunks[chunks.length - 1])
-    );
-  }
-
-  generateOne(chunk: Chunk, prior?: Chunk): string {
-    let html = '';
-    const { attributes, content } = chunk;
+  formatChars(content: Content, attributes: Attributes): string {
+    let html: string;
 
     if (isText(content)) {
       html = XmlEntities.encode(content);
@@ -151,8 +118,67 @@ export default class MinimalHTML implements Generator {
         if (!this.textFormatters[k]) throw new Error(`Unknown attribute: ${k}`);
       });
 
-    html = this.formatLines(html, chunk, prior);
     return html;
+  }
+
+  formatLine(current: Line, prior: Line): string {
+    const { align, list, text } = current;
+    const style = align ? ` style="text-align: ${align}"` : '';
+
+    let html: string;
+    if (list) html = `<li${style}>${text}</li>`;
+    else if (text) html = `<div${style}>${text}</div>`;
+    else html = '';
+
+    if (list !== prior?.list) {
+      const prefix: string[] = [];
+      if (prior?.list === 'bullet') prefix.push(`</ul>`);
+      else if (prior?.list === 'ordered') prefix.push(`</ol>`);
+      if (list === 'bullet') prefix.push(`<ul style="${LINE_STYLES.list}">`);
+      else if (list === 'ordered')
+        prefix.push(`<ol style="${LINE_STYLES.list}">`);
+      html = `${prefix.join('')}${html}`;
+    }
+
+    return html;
+  }
+
+  chunksToLines(chunks: Chunk[]): Line[] {
+    const lines: Line[] = [];
+    let current: Line | undefined;
+
+    for (let i = 0; i < chunks.length; i++) {
+      const { attributes } = chunks[i];
+      const { content } = chunks[i];
+      let newline = false;
+      if (isText(content) && content.endsWith('\n')) {
+        newline = true;
+        //content = content.slice(0, -1);
+      }
+      const text = this.formatChars(content, attributes);
+      const align = attributes.align as string | undefined;
+      const list = attributes.list as string | undefined;
+      if (current) {
+        current.text = current.text + text;
+        if (newline) {
+          lines.push(current);
+          current = undefined;
+        }
+      } else {
+        if (newline) lines.push({ text, align, list });
+        else current = { text, align, list };
+      }
+    }
+    if (current) lines.push(current);
+
+    lines.push({ text: '' });
+
+    return lines;
+  }
+
+  generate(chunks: Chunk[]): string {
+    const lines = this.chunksToLines(chunks);
+    return lines.map((line, i) => this.formatLine(line, lines[i - 1])).join('');
   }
 
   isLineFormat(format: string): boolean {

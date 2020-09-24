@@ -27,7 +27,7 @@ function genHTML(ops) {
 describe('generators/MinimalHTML', () => {
   it('handles unknown content', () => {
     const g = new MinimalHTML();
-    expect(generateFragment(UNKNOWN_ATTRIBUTE, g)).toEqual('hi');
+    expect(generateFragment(UNKNOWN_ATTRIBUTE, g)).toEqual('<div>hi</div>');
     expect(generateFragment(UNKNOWN_EMBED, g)).toEqual('');
     expect(generateFragment(UNKNOWN_INSERT, g)).toEqual('');
   });

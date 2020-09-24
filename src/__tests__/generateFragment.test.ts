@@ -7,8 +7,8 @@ describe('generateFragment', () => {
     expect(generateFragment(fixtures.TRIVIAL, new NullGenerator())).toEqual('');
   });
 
-  it('omits HTML, BODY, eyc', () => {
-    expect(generateFragment([{ insert: '\n' }])).toEqual('\n');
+  it('omits HTML, BODY, etc', () => {
+    expect(generateFragment([{ insert: '\n' }])).toEqual('<div>\n</div>');
   });
 
   it('tolerates nullish & invalid deltas', () => {
