@@ -83,11 +83,42 @@ interface Line {
  */
 export default class MinimalHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
+  paraTagName = 'div';
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
   constructor({ strict }: Options = {}) {
     this.strict = strict;
+  }
+
+  chunksToLines(chunks: Chunk[]): Line[] {
+    const lines: Line[] = [];
+    let current: Line | undefined;
+
+    for (let i = 0; i < chunks.length; i++) {
+      const { attributes } = chunks[i];
+      const { content } = chunks[i];
+      let newline = false;
+      if (isText(content) && content.endsWith('\n')) newline = true;
+      const text = this.formatChars(content, attributes);
+      const align = attributes.align as string | undefined;
+      const list = attributes.list as string | undefined;
+      if (current) {
+        current.text = current.text + text;
+        if (newline) {
+          lines.push(current);
+          current = undefined;
+        }
+      } else {
+        if (newline) lines.push({ text, align, list });
+        else current = { text, align, list };
+      }
+    }
+    if (current) lines.push(current);
+
+    lines.push({ text: '' });
+
+    return lines;
   }
 
   formatChars(content: Content, attributes: Attributes): string {
@@ -127,7 +158,8 @@ export default class MinimalHTML implements Generator {
 
     let html: string;
     if (list) html = `<li${style}>${text}</li>`;
-    else if (text) html = `<div${style}>${text}</div>`;
+    else if (text)
+      html = `<${this.paraTagName}${style}>${text}</${this.paraTagName}>`;
     else html = '';
 
     if (list !== prior?.list) {
@@ -141,39 +173,6 @@ export default class MinimalHTML implements Generator {
     }
 
     return html;
-  }
-
-  chunksToLines(chunks: Chunk[]): Line[] {
-    const lines: Line[] = [];
-    let current: Line | undefined;
-
-    for (let i = 0; i < chunks.length; i++) {
-      const { attributes } = chunks[i];
-      const { content } = chunks[i];
-      let newline = false;
-      if (isText(content) && content.endsWith('\n')) {
-        newline = true;
-        //content = content.slice(0, -1);
-      }
-      const text = this.formatChars(content, attributes);
-      const align = attributes.align as string | undefined;
-      const list = attributes.list as string | undefined;
-      if (current) {
-        current.text = current.text + text;
-        if (newline) {
-          lines.push(current);
-          current = undefined;
-        }
-      } else {
-        if (newline) lines.push({ text, align, list });
-        else current = { text, align, list };
-      }
-    }
-    if (current) lines.push(current);
-
-    lines.push({ text: '' });
-
-    return lines;
   }
 
   generate(chunks: Chunk[]): string {

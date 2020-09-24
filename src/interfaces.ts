@@ -4,8 +4,10 @@ export type Attributes = Record<string, boolean | string>;
 /// A piece of Quill content.
 export type Content = string | object;
 
-/// Standalone representation of a Quill DeltaOperation.
-/// @see https://github.com/quilljs/delta/blob/master/src/Op.ts
+/**
+ * Standalone representation of a Quill DeltaOperation.
+ * @see https://github.com/quilljs/delta/blob/master/src/Op.ts
+ */
 export interface Op {
   attributes?: Attributes;
   insert?: Content;
@@ -18,9 +20,15 @@ export const isEmbed = (o: unknown): o is object =>
 /// Type discriminator for textual Content.
 export const isText = (o: unknown): o is string => typeof o === 'string';
 
-/// Self-contained piece of Quill content that has been normalized to include
-/// all applicable line and character formats and to contain at most one newline
-/// (which is guaranteed to be the final character, if present).
+/**
+ * Self-contained piece of Quill content that has been normalized to include
+ * all applicable line and character formats and to contain at most one newline
+ * (which is guaranteed to be the final character, if present).
+ *
+ * Chunks compensate for a quirk of the Quill delta format where block-scoped
+ * formats (e.g. align, list) actually apply to content from the last partial
+ * line of previous chunk(s).
+ */
 export interface Chunk {
   attributes: Attributes;
   content: Content;
