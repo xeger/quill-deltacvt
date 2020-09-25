@@ -14,16 +14,32 @@ export type EmbedFormatter = (
   attributes: Attributes
 ) => string;
 
-export type TextFormatter = (text: string, value?: boolean | string) => string;
+export type TextFormatter = (span: TextSpan, value?: boolean | string) => void;
+
+export class TextSpan {
+  text?: string;
+  styles: string[];
+
+  constructor(text: string) {
+    this.styles = [];
+    this.text = text;
+  }
+
+  toString(): string {
+    const style = this.styles.length ? ` style="${this.styles.join(';')}"` : '';
+    if (style.length) return `<span${style}>${this.text}</span>`;
+    else return this.text || '';
+  }
+}
 
 const BODY_STYLE =
-  'color: #303030; font-weight: 400; white-space: pre-wrap; font-family: sans-serif';
+  'color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif';
 
 /**
  * Inline CSS styles for selected line formats.
  */
 const LINE_STYLES = {
-  list: 'margin: 0px; list-style-position: inside; padding-left: 1.5rem',
+  list: 'margin:0px;list-style-position:inside;padding-left:1.5rem',
 };
 
 /**
@@ -45,12 +61,24 @@ const EMBEDS: Record<string, EmbedFormatter> = {
  * and need to be handled as part of the generation algorithm.
  */
 const TEXTS: Record<string, TextFormatter> = {
-  bold: (text) => `<b>${text}</b>`,
-  color: (text, color) => `<span style="color: ${color}">${text}</span>`,
-  italic: (text) => `<i>${text}</i>`,
-  link: (text, href) => `<a href="${href}">${text}</a>`,
-  size: (text, size) => `<span style="font-size: ${size}">${text}</span>`,
-  underline: (text) => `<u>${text}</u>`,
+  bold: (span) => {
+    span.styles.push('font-weight:bold');
+  },
+  color: (span, color) => {
+    span.styles.push(`color:${color}`);
+  },
+  italic: (span) => {
+    span.styles.push('font-style:italic');
+  },
+  link: (span, href) => {
+    span.text = `<a href="${href}">${span.text}</a>`;
+  },
+  size: (span, size) => {
+    span.styles.push(`font-size:${size}`);
+  },
+  underline: (span) => {
+    span.styles.push('text-decoration:underline');
+  },
 };
 
 export interface Options {
@@ -66,24 +94,23 @@ interface Line {
 /**
  * Generator that outputs HTML approximating the visual style of Quill's
  * Parchment formats, but with notable differences:
- *   - newlines are preserved
  *   - the `<div>` tag is used instead of `<p>` for paragraphs
- *   - left-aligned paragraphs are not surrounded by a tag
- *   - adjacent paragraphs with the same alignment use the same <div> tag
- *   - all styles are inline
- *   - HTML tags (b, i, em, etc) are preferred to `<span style=>`
+ *   - all styling is inline (no classes; no stylesheet)
  *
  * The resulting HTML is minimal in size, self contained with no need
  * for external stylesheets, minimally influenced by user-agent stylesheets,
  * and looks visually similar to Quill output in modern browsers, although
- * structurally quite different
+ * structurally quite different.
  *
- * If you generate fragments, make sure to apply a `white-space: pre-wrap` to
- * an enclosing tag, else the HTML will not look right at all!
+ * To achieve this look, the generator applies a style to the `body` element
+ * when you `wrap()`, which affects all of the inner content.
+ *
+ * If you generate fragments, make sure to apply a similar style (especially
+ * a `white-space: pre-wrap`) to an enclosing tag, else the HTML will look
+ * completely wrong!
  */
 export default class MinimalHTML implements Generator {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
-  paraTagName = 'div';
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
@@ -122,34 +149,35 @@ export default class MinimalHTML implements Generator {
   }
 
   formatChars(content: Content, attributes: Attributes): string {
-    let html: string;
+    let text: string;
 
     if (isText(content)) {
-      html = XmlEntities.encode(content);
+      text = XmlEntities.encode(content);
     } else if (isEmbed(content)) {
       const key = Object.keys(content)[0];
       if (this.embedFormatters[key])
-        html = this.embedFormatters[key](content[key], attributes);
+        text = this.embedFormatters[key](content[key], attributes);
       else {
         if (this.strict) throw new Error(`Unknown embed: ${key}`);
-        else html = '';
+        else text = '';
       }
     } else {
       if (this.strict)
         throw new Error(`Unknown insert type: ${typeof content}`);
-      else html = '';
+      else text = '';
     }
 
+    const span = new TextSpan(text);
     Object.keys(this.textFormatters).forEach((k) => {
       const attr = attributes[k];
-      if (attr) html = this.textFormatters[k](html, attr);
+      if (attr) this.textFormatters[k](span, attr);
     });
     if (this.strict)
       Object.keys(attributes).forEach((k) => {
         if (!this.textFormatters[k]) throw new Error(`Unknown attribute: ${k}`);
       });
 
-    return html;
+    return span.toString();
   }
 
   formatLine(current: Line, prior: Line): string {
@@ -158,8 +186,7 @@ export default class MinimalHTML implements Generator {
 
     let html: string;
     if (list) html = `<li${style}>${text}</li>`;
-    else if (text)
-      html = `<${this.paraTagName}${style}>${text}</${this.paraTagName}>`;
+    else if (text) html = `<div${style}>${text}</div>`;
     else html = '';
 
     if (list !== prior?.list) {
