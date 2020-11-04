@@ -1,0 +1,221 @@
+[
+  {
+    "insert": "Centered.\nCentered ",
+    "attributes": {
+      "align": "center"
+    }
+  },
+  {
+    "insert": "with",
+    "attributes": {
+      "align": "center",
+      "color": "#b2b200",
+      "bold": true
+    }
+  },
+  {
+    "insert": " ",
+    "attributes": {
+      "align": "center"
+    }
+  },
+  {
+    "insert": "some",
+    "attributes": {
+      "align": "center",
+      "link": "http://quilljs.com",
+      "underline": true
+    }
+  },
+  {
+    "insert": " formatting.\n",
+    "attributes": {
+      "align": "center"
+    }
+  },
+  {
+    "insert": "Right aligned.\n",
+    "attributes": {
+      "align": "right"
+    }
+  },
+  {
+    "insert": "Right",
+    "attributes": {
+      "align": "right",
+      "color": "#66b966"
+    }
+  },
+  {
+    "insert": " ",
+    "attributes": {
+      "align": "right"
+    }
+  },
+  {
+    "insert": "aligned",
+    "attributes": {
+      "align": "right",
+      "italic": true,
+      "underline": true
+    }
+  },
+  {
+    "insert": " with ",
+    "attributes": {
+      "align": "right"
+    }
+  },
+  {
+    "insert": "some",
+    "attributes": {
+      "align": "right",
+      "bold": true
+    }
+  },
+  {
+    "insert": " formatting.\n",
+    "attributes": {
+      "align": "right"
+    }
+  },
+  {
+    "insert": "\n",
+    "attributes": {
+      "align": "justify"
+    }
+  },
+  {
+    "insert": "Justified",
+    "attributes": {
+      "align": "justify",
+      "bold": true
+    }
+  },
+  {
+    "insert": " so the text nicely fills the line. ",
+    "attributes": {
+      "align": "justify"
+    }
+  },
+  {
+    "insert": "Justified",
+    "attributes": {
+      "align": "justify",
+      "color": "#f06666"
+    }
+  },
+  {
+    "insert": " ",
+    "attributes": {
+      "align": "justify"
+    }
+  },
+  {
+    "insert": "so",
+    "attributes": {
+      "align": "justify",
+      "color": "#66a3e0"
+    }
+  },
+  {
+    "insert": " ",
+    "attributes": {
+      "align": "justify"
+    }
+  },
+  {
+    "insert": "the",
+    "attributes": {
+      "align": "justify",
+      "color": "#c285ff"
+    }
+  },
+  {
+    "insert": " text nicely fills the line. Justified so the text nicely fills the line.\nAlso justified.\n",
+    "attributes": {
+      "align": "justify"
+    }
+  },
+  {
+    "insert": "\n"
+  },
+  {
+    "insert": "Unordered\nList\n",
+    "attributes": {
+      "list": "bullet"
+    }
+  },
+  {
+    "insert": "\n"
+  },
+  {
+    "insert": "Ordered\nList\n",
+    "attributes": {
+      "list": "ordered"
+    }
+  },
+  {
+    "insert": "\n"
+  },
+  {
+    "insert": "Mixed\n",
+    "attributes": {
+      "list": "bullet"
+    }
+  },
+  {
+    "insert": "List\n",
+    "attributes": {
+      "list": "ordered"
+    }
+  },
+  {
+    "insert": "Weirdly\n",
+    "attributes": {
+      "list": "bullet"
+    }
+  },
+  {
+    "insert": "Laid Out\nWith Numbers\n",
+    "attributes": {
+      "list": "ordered"
+    }
+  },
+  {
+    "insert": "Interspersed\n",
+    "attributes": {
+      "list": "bullet"
+    }
+  },
+  {
+    "insert": "\n"
+  },
+  {
+    "insert": "list\n",
+    "attributes": {
+      "list": "bullet"
+    }
+  },
+  {
+    "insert": "with\n",
+    "attributes": {
+      "list": "bullet",
+      "align": "center"
+    }
+  },
+  {
+    "insert": "alignment\n",
+    "attributes": {
+      "list": "bullet",
+      "align": "right"
+    }
+  },
+  {
+    "insert": "and justification in case the list items get stupendously enormously long\n",
+    "attributes": {
+      "list": "bullet",
+      "align": "justify"
+    }
+  }
+]

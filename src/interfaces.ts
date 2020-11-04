@@ -26,8 +26,12 @@ export const isText = (o: unknown): o is string => typeof o === 'string';
  * (which is guaranteed to be the final character, if present).
  *
  * Chunks compensate for a quirk of the Quill delta format where block-scoped
- * formats (e.g. align, list) actually apply to content from the last partial
- * line of previous chunk(s).
+ * formats (e.g. align, list) apply to an entire line, which may include numerous
+ * prior ops; conversely, a single op may contain numerous lines which all carry
+ * the same block-scoped format.
+ *
+ * Chunks also vary from Ops in that they are guaranteed to have an Attributes
+ * object.
  */
 export interface Chunk {
   attributes: Attributes;

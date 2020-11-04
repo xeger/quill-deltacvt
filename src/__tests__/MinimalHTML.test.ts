@@ -8,6 +8,7 @@ import {
   LISTS,
   LISTS_STYLED,
   MALICIOUS,
+  MULTI_NEWLINE,
   SMORGASBORD,
   TRIVIAL_ALIGN,
   TRIVIAL_LIST,
@@ -59,6 +60,10 @@ describe('generators/MinimalHTML', () => {
 
     it('handles trivial aligned text', () => {
       visual.matchSnapshot(genHTML(TRIVIAL_ALIGN));
+    });
+
+    it('handles line formats within the same DeltaOperation', () => {
+      visual.matchSnapshot(genHTML(MULTI_NEWLINE));
     });
   });
 

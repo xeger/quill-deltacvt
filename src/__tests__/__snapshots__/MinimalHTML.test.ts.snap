@@ -6,8 +6,8 @@ exports[`generators/MinimalHTML algorithm escapes HTML syntax 1`] = `
 </li><li style=\\"text-align: right\\">&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
 </li><li>not xss &amp; okay
 </li><li style=\\"text-align: center\\">not xss &amp; okay
-
-</li></ul></body></html>"
+</li></ul><div>
+</div></body></html>"
 `;
 
 exports[`generators/MinimalHTML algorithm handles images 1`] = `
@@ -26,6 +26,35 @@ exports[`generators/MinimalHTML algorithm handles images 1`] = `
 </div><div style=\\"text-align: center\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 </div><div style=\\"text-align: center\\">Sized and centered image.
 </div></body></html>"
+`;
+
+exports[`generators/MinimalHTML algorithm handles line formats within the same DeltaOperation 1`] = `
+"<!DOCTYPE html><html><body style=\\"color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif\\"><div style=\\"text-align: center\\">Centered.
+</div><div style=\\"text-align: center\\">Centered <span style=\\"font-weight:bold;color:#b2b200\\">with</span> <span style=\\"text-decoration:underline\\"><a href=\\"http://quilljs.com\\">some</a></span> formatting.
+</div><div style=\\"text-align: right\\">Right aligned.
+</div><div style=\\"text-align: right\\"><span style=\\"color:#66b966\\">Right</span> <span style=\\"font-style:italic;text-decoration:underline\\">aligned</span> with <span style=\\"font-weight:bold\\">some</span> formatting.
+</div><div style=\\"text-align: justify\\">
+</div><div style=\\"text-align: justify\\"><span style=\\"font-weight:bold\\">Justified</span> so the text nicely fills the line. <span style=\\"color:#f06666\\">Justified</span> <span style=\\"color:#66a3e0\\">so</span> <span style=\\"color:#c285ff\\">the</span> text nicely fills the line. Justified so the text nicely fills the line.
+</div><div style=\\"text-align: justify\\">Also justified.
+</div><div>
+</div><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Unordered
+</li><li>List
+</li></ul><div>
+</div><ol style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Ordered
+</li><li>List
+</li></ol><div>
+</div><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Mixed
+</li></ul><ol style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>List
+</li></ol><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Weirdly
+</li></ul><ol style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Laid Out
+</li><li>With Numbers
+</li></ol><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>Interspersed
+</li></ul><div>
+</div><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li>list
+</li><li style=\\"text-align: center\\">with
+</li><li style=\\"text-align: right\\">alignment
+</li><li style=\\"text-align: justify\\">and justification in case the list items get stupendously enormously long
+</li></ul></body></html>"
 `;
 
 exports[`generators/MinimalHTML algorithm handles lists 1`] = `
@@ -57,7 +86,7 @@ exports[`generators/MinimalHTML algorithm handles standard Quill formats 1`] = `
 </div><div style=\\"text-align: center\\">Centered <span style=\\"font-weight:bold;color:#b2b200\\">with</span> <span style=\\"text-decoration:underline\\"><a href=\\"http://quilljs.com\\">some</a></span> formatting.
 </div><div style=\\"text-align: right\\">Right aligned.
 </div><div style=\\"text-align: right\\"><span style=\\"color:#66b966\\">Right</span> <span style=\\"font-style:italic;text-decoration:underline\\">aligned</span> with <span style=\\"font-weight:bold\\">some</span> formatting.
-
+</div><div style=\\"text-align: justify\\">
 </div><div style=\\"text-align: justify\\"><span style=\\"font-weight:bold\\">Justified</span> so the text nicely fills the line. <span style=\\"color:#f06666\\">Justified</span> <span style=\\"color:#66a3e0\\">so</span> <span style=\\"color:#c285ff\\">the</span> text nicely fills the line. Justified so the text nicely fills the line.
 </div><div style=\\"text-align: justify\\">Also justified.
 </div><div>
@@ -83,8 +112,8 @@ exports[`generators/MinimalHTML algorithm handles standard Quill formats 1`] = `
 `;
 
 exports[`generators/MinimalHTML algorithm handles styled lists 1`] = `
-"<!DOCTYPE html><html><body style=\\"color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif\\"><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li><span style=\\"font-weight:bold;text-decoration:underline\\">lots</span> <span style=\\"color:#9933ff\\">of</span> <span style=\\"font-weight:bold;font-style:italic;text-decoration:underline\\"><a href=\\"http://google.com\\">style</a></span> <span style=\\"font-style:italic\\">happening
-</span></li><li>lots <span style=\\"font-weight:bold\\">of</span> <span style=\\"color:#e60000\\">function</span> too
+"<!DOCTYPE html><html><body style=\\"color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif\\"><ul style=\\"margin:0px;list-style-position:inside;padding-left:1.5rem\\"><li><span style=\\"font-weight:bold;text-decoration:underline\\">lots</span> <span style=\\"color:#9933ff\\">of</span> <span style=\\"font-weight:bold;font-style:italic;text-decoration:underline\\"><a href=\\"http://google.com\\">style</a></span> <span style=\\"font-style:italic\\">happening</span>
+</li><li>lots <span style=\\"font-weight:bold\\">of</span> <span style=\\"color:#e60000\\">function</span> too
 </li><li>gotta love it all 
 </li></ul></body></html>"
 `;
