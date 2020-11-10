@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generators/QuillHTML algorithm escapes HTML syntax 1`] = `
+"<!DOCTYPE html><html><body><p>&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+</p><ul><li>&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+</li><li style=\\"text-align: right\\">&lt;script&gt;alert(&quot;xss&quot;);&lt;/script&gt;
+</li><li>not xss &amp; okay
+</li><li style=\\"text-align: center\\">not xss &amp; okay
+</li></ul><br/></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles images 1`] = `
+"<!DOCTYPE html><html><body><p><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
+</p><p>Sized image.
+</p><br/><p><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>
+</p><p>Left-aligned image.
+</p><br/><p style=\\"text-align: center\\"><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>
+</p><p style=\\"text-align: center\\">Center-aligned image.
+</p><br/><p style=\\"text-align: right\\"><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>
+</p><p style=\\"text-align: right\\">Right-aligned image.
+</p><br/><p style=\\"text-align: center\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
+</p><p style=\\"text-align: center\\">Sized and centered image.
+</p></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles line formats within the same DeltaOperation 1`] = `
+"<!DOCTYPE html><html><body><p style=\\"text-align: center\\">Centered.
+</p><p style=\\"text-align: center\\">Centered <span style=\\"font-weight:bold;color:#b2b200\\">with</span> <span style=\\"text-decoration:underline\\"><a href=\\"http://quilljs.com\\">some</a></span> formatting.
+</p><p style=\\"text-align: right\\">Right aligned.
+</p><p style=\\"text-align: right\\"><span style=\\"color:#66b966\\">Right</span> <span style=\\"font-style:italic;text-decoration:underline\\">aligned</span> with <span style=\\"font-weight:bold\\">some</span> formatting.
+</p><br/><p style=\\"text-align: justify\\"><span style=\\"font-weight:bold\\">Justified</span> so the text nicely fills the line. <span style=\\"color:#f06666\\">Justified</span> <span style=\\"color:#66a3e0\\">so</span> <span style=\\"color:#c285ff\\">the</span> text nicely fills the line. Justified so the text nicely fills the line.
+</p><p style=\\"text-align: justify\\">Also justified.
+</p><br/><ul><li>Unordered
+</li><li>List
+</li></ul><br/><ol><li>Ordered
+</li><li>List
+</li></ol><br/><ul><li>Mixed
+</li></ul><ol><li>List
+</li></ol><ul><li>Weirdly
+</li></ul><ol><li>Laid Out
+</li><li>With Numbers
+</li></ol><ul><li>Interspersed
+</li></ul><br/><ul><li>list
+</li><li style=\\"text-align: center\\">with
+</li><li style=\\"text-align: right\\">alignment
+</li><li style=\\"text-align: justify\\">and justification in case the list items get stupendously enormously long
+</li></ul></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles lists 1`] = `
+"<!DOCTYPE html><html><body><p>Normal text to start.
+</p><ul><li>chalk
+</li><li>
+</li><li>cheese
+</li></ul><p>Now an ordered list:
+</p><ol><li>apples
+</li><li style=\\"text-align: right\\">oranges
+</li><li>pears
+</li><li>
+</li></ol><p>And finally, adjacent lists:
+</p><ul><li>please
+</li><li>excuse
+</li><li>my
+</li></ul><ol><li>dear
+</li><li>aunt
+</li><li>sally
+</li></ol></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles standard Quill formats 1`] = `
+"<!DOCTYPE html><html><body><p>Plain.  <span style=\\"font-weight:bold\\">Bold. </span><span style=\\"font-style:italic\\">Italic. </span><span style=\\"text-decoration:underline\\">Underline.</span> <span style=\\"color:#9933ff\\">Colored.</span> <a href=\\"https://quilljs.com\\">Link.</a>
+</p><p><span style=\\"font-size:x-small\\">Small, </span>normal, <span style=\\"font-size:x-large\\">large, </span><span style=\\"font-size:xx-large\\">huge!</span>
+</p><p>Left aligned.
+</p><p>Left <span style=\\"font-weight:bold\\">aligned</span> with <span style=\\"font-style:italic;text-decoration:underline\\">some</span> <span style=\\"color:#e60000\\">formatting</span>.
+</p><p style=\\"text-align: center\\">Centered.
+</p><p style=\\"text-align: center\\">Centered <span style=\\"font-weight:bold;color:#b2b200\\">with</span> <span style=\\"text-decoration:underline\\"><a href=\\"http://quilljs.com\\">some</a></span> formatting.
+</p><p style=\\"text-align: right\\">Right aligned.
+</p><p style=\\"text-align: right\\"><span style=\\"color:#66b966\\">Right</span> <span style=\\"font-style:italic;text-decoration:underline\\">aligned</span> with <span style=\\"font-weight:bold\\">some</span> formatting.
+</p><br/><p style=\\"text-align: justify\\"><span style=\\"font-weight:bold\\">Justified</span> so the text nicely fills the line. <span style=\\"color:#f06666\\">Justified</span> <span style=\\"color:#66a3e0\\">so</span> <span style=\\"color:#c285ff\\">the</span> text nicely fills the line. Justified so the text nicely fills the line.
+</p><p style=\\"text-align: justify\\">Also justified.
+</p><br/><ul><li>Unordered
+</li><li>List
+</li></ul><br/><ol><li>Ordered
+</li><li>List
+</li></ol><br/><ul><li>Mixed
+</li></ul><ol><li>List
+</li></ol><ul><li>Weirdly
+</li></ul><ol><li>Laid Out
+</li><li>With Numbers
+</li></ol><ul><li>Interspersed
+</li></ul><br/><ul><li>list
+</li><li style=\\"text-align: center\\">with
+</li><li style=\\"text-align: right\\">alignment
+</li><li style=\\"text-align: justify\\">and justification in case the list items get stupendously enormously long
+</li></ul><br/></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles styled lists 1`] = `
+"<!DOCTYPE html><html><body><ul><li><span style=\\"font-weight:bold;text-decoration:underline\\">lots</span> <span style=\\"color:#9933ff\\">of</span> <span style=\\"font-weight:bold;font-style:italic;text-decoration:underline\\"><a href=\\"http://google.com\\">style</a></span> <span style=\\"font-style:italic\\">happening</span>
+</li><li>lots <span style=\\"font-weight:bold\\">of</span> <span style=\\"color:#e60000\\">function</span> too
+</li><li>gotta love it all 
+</li></ul></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles trivial aligned text 1`] = `
+"<!DOCTYPE html><html><body><p style=\\"text-align: center\\">hi
+</p></body></html>"
+`;
+
+exports[`generators/QuillHTML algorithm handles trivial inputs 1`] = `
+"<!DOCTYPE html><html><body><ul><li>hi
+</li></ul></body></html>"
+`;

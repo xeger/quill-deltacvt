@@ -1,15 +1,5 @@
 import BaseHTML, { EmbedFormatter, TextFormatter } from './BaseHTML';
 
-const BODY_STYLE =
-  'color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif';
-
-/**
- * Inline CSS styles for selected line formats.
- */
-const LINE_STYLES = {
-  list: 'margin:0px;list-style-position:inside;padding-left:1.5rem',
-};
-
 /**
  * HTML generators for non-textual content (e.g. images)
  * in a chunk.
@@ -60,24 +50,14 @@ interface Line {
 }
 
 /**
- * Generator that outputs HTML approximating the visual style of Quill's
- * Parchment formats, but with notable differences:
- *   - the `<div>` tag is used instead of `<p>` for paragraphs
- *   - all styling is inline (no classes; no stylesheet)
+ * Generator that outputs HTML approximating the exact HTML output
+ * of Quill's Parchment formats. No attempt is made to match the
+ * visual appearance of the Quill editor.
  *
- * The resulting HTML is minimal in size, self contained with no need
- * for external stylesheets, minimally influenced by user-agent stylesheets,
- * and looks visually similar to Quill output in modern browsers, although
- * structurally quite different.
- *
- * To achieve this look, the generator applies a style to the `body` element
- * when you `wrap()`, which affects all of the inner content.
- *
- * If you generate fragments, make sure to apply a similar style (especially
- * a `white-space: pre-wrap`) to an enclosing tag, else the HTML will look
- * completely wrong!
+ * Notable differences from Quill HTML output:
+ *   -
  */
-export default class MinimalHTML extends BaseHTML {
+export default class QuillHTML extends BaseHTML {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
@@ -92,16 +72,17 @@ export default class MinimalHTML extends BaseHTML {
 
     let html: string;
     if (list) html = `<li${style}>${text}</li>`;
-    else if (text) html = `<div${style}>${text}</div>`;
-    else html = '';
+    else if (text) {
+      if (text === '\n') html = '<br/>';
+      else html = `<p${style}>${text}</p>`;
+    } else html = '';
 
     if (list !== prior?.list) {
       const prefix: string[] = [];
       if (prior?.list === 'bullet') prefix.push(`</ul>`);
       else if (prior?.list === 'ordered') prefix.push(`</ol>`);
-      if (list === 'bullet') prefix.push(`<ul style="${LINE_STYLES.list}">`);
-      else if (list === 'ordered')
-        prefix.push(`<ol style="${LINE_STYLES.list}">`);
+      if (list === 'bullet') prefix.push(`<ul>`);
+      else if (list === 'ordered') prefix.push(`<ol>`);
       html = `${prefix.join('')}${html}`;
     }
 
@@ -119,6 +100,6 @@ export default class MinimalHTML extends BaseHTML {
   }
 
   wrap(fragment: string): string {
-    return `<!DOCTYPE html><html><body style="${BODY_STYLE}">${fragment}</body></html>`;
+    return `<!DOCTYPE html><html><body>${fragment}</body></html>`;
   }
 }

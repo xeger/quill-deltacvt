@@ -1,4 +1,5 @@
 import MinimalHTML from './generators/MinimalHTML';
+import QuillHTML from './generators/QuillHTML';
 import { Op, Generator } from './interfaces';
 import { convertOpsToChunks } from './internals';
 
@@ -29,4 +30,4 @@ export function generate(
   return g.wrap(generateFragment(ops, g));
 }
 
-export const generators = { MinimalHTML };
+export const generators = { MinimalHTML, QuillHTML };
