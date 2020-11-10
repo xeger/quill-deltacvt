@@ -19,7 +19,7 @@ function currentTestName() {
 function currentTestSnapshot() {
   const { snapshotState } = global[GLOBAL_STATE].state;
   const name = currentTestName();
-  const key = Object.keys(snapshotState._snapshotData).find(k =>
+  const key = Object.keys(snapshotState._snapshotData).find((k) =>
     k.startsWith(name)
   );
   const data = key && snapshotState._snapshotData[key];
@@ -44,9 +44,7 @@ beforeAll(() => {
 });
 
 function makeBasename() {
-  const name = currentTestName()
-    .replace(/\W+/g, '-')
-    .slice(-40);
+  const name = currentTestName().replace(/\W+/g, '-').slice(-40);
   return `${name}`;
 }
 

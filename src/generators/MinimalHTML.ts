@@ -1,36 +1,4 @@
-import { XmlEntities } from 'html-entities';
-
-import {
-  Attributes,
-  Content,
-  Chunk,
-  Generator,
-  isEmbed,
-  isText,
-} from '../interfaces';
-
-export type EmbedFormatter = (
-  content: string | Record<string, string>,
-  attributes: Attributes
-) => string;
-
-export type TextFormatter = (span: TextSpan, value?: boolean | string) => void;
-
-export class TextSpan {
-  text?: string;
-  styles: string[];
-
-  constructor(text: string) {
-    this.styles = [];
-    this.text = text;
-  }
-
-  toString(): string {
-    const style = this.styles.length ? ` style="${this.styles.join(';')}"` : '';
-    if (style.length) return `<span${style}>${this.text}</span>`;
-    else return this.text || '';
-  }
-}
+import BaseHTML, { EmbedFormatter, TextFormatter } from './BaseHTML';
 
 const BODY_STYLE =
   'color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif';
@@ -109,75 +77,13 @@ interface Line {
  * a `white-space: pre-wrap`) to an enclosing tag, else the HTML will look
  * completely wrong!
  */
-export default class MinimalHTML implements Generator {
+export default class MinimalHTML extends BaseHTML {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
   strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
-  constructor({ strict }: Options = {}) {
-    this.strict = strict;
-  }
-
-  chunksToLines(chunks: Chunk[]): Line[] {
-    const lines: Line[] = [];
-    let current: Line | undefined;
-
-    for (let i = 0; i < chunks.length; i++) {
-      const { attributes } = chunks[i];
-      const { content } = chunks[i];
-      let newline = false;
-      if (isText(content) && content.endsWith('\n')) newline = true;
-      const text = this.formatChars(content, attributes);
-      const align = attributes.align as string | undefined;
-      const list = attributes.list as string | undefined;
-      if (current) {
-        current.text = current.text + text;
-        if (newline) {
-          lines.push(current);
-          current = undefined;
-        }
-      } else {
-        if (newline) lines.push({ text, align, list });
-        else current = { text, align, list };
-      }
-    }
-    if (current) lines.push(current);
-
-    lines.push({ text: '' });
-
-    return lines;
-  }
-
-  formatChars(content: Content, attributes: Attributes): string {
-    let text: string;
-
-    if (isText(content)) {
-      text = XmlEntities.encode(content);
-    } else if (isEmbed(content)) {
-      const key = Object.keys(content)[0];
-      if (this.embedFormatters[key])
-        text = this.embedFormatters[key](content[key], attributes);
-      else {
-        if (this.strict) throw new Error(`Unknown embed: ${key}`);
-        else text = '';
-      }
-    } else {
-      if (this.strict)
-        throw new Error(`Unknown insert type: ${typeof content}`);
-      else text = '';
-    }
-
-    const span = new TextSpan(text);
-    Object.keys(this.textFormatters).forEach((k) => {
-      const attr = attributes[k];
-      if (attr) this.textFormatters[k](span, attr);
-    });
-    if (this.strict)
-      Object.keys(attributes).forEach((k) => {
-        if (!this.textFormatters[k]) throw new Error(`Unknown attribute: ${k}`);
-      });
-
-    return span.toString();
+  constructor(options: Options) {
+    super(EMBEDS, TEXTS, options);
   }
 
   formatLine(current: Line, prior: Line): string {
@@ -200,11 +106,6 @@ export default class MinimalHTML implements Generator {
     }
 
     return html;
-  }
-
-  generate(chunks: Chunk[]): string {
-    const lines = this.chunksToLines(chunks);
-    return lines.map((line, i) => this.formatLine(line, lines[i - 1])).join('');
   }
 
   isLineFormat(format: string): boolean {
