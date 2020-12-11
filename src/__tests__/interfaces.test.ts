@@ -11,5 +11,16 @@ describe('interfaces', () => {
       const toTheirs: TheirOp[] = mine;
       const fromTheirs: OurOp[] = theirs;
     });
+
+    it('admits embeds', () => {
+      const mine: OurOp = { insert: { image: 'http://placekitten.com' } };
+    });
+
+    it('admits attributes', () => {
+      const mine: OurOp = {
+        insert: 'meh',
+        attributes: { pork: true, beans: 'baked', count: 123.45 },
+      };
+    });
   });
 });

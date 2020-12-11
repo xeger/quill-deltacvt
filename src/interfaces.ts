@@ -1,8 +1,8 @@
 /// Formats that apply to a piece of Quill content.
-export type Attributes = Record<string, boolean | string>;
+export type Attributes = Record<string, any>;
 
 /// A piece of Quill content.
-export type Content = string | object;
+export type Content = string | Record<string, any>;
 
 /**
  * Standalone representation of a Quill DeltaOperation.
