@@ -39,6 +39,7 @@ npm version <patch|minor|major>
 ### Build distributables
 
 ```sh
+npm run clean # not strictly necessary, but good form
 npm run build
 ```
 
