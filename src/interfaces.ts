@@ -1,8 +1,14 @@
 /// Formats that apply to a piece of Quill content.
 export type Attributes = Record<string, any>;
 
-/// A piece of Quill content.
-export type Content = string | Record<string, any>;
+/**
+ * A piece of Quill content. Ideally this would be typed more precisely, but
+ * we are imitating Quill 1.3.7 typings to ensure interface compatibility.
+ *
+ * @see isEmbed() to identify embedded content (e.g. images)
+ * @see isText() to identify textual content
+ */
+export type Content = any;
 
 /**
  * Standalone representation of a Quill DeltaOperation.
