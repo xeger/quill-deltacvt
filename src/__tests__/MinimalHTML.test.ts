@@ -33,6 +33,11 @@ describe('generators/MinimalHTML', () => {
     expect(generateFragment(UNKNOWN_INSERT, g)).toEqual('');
   });
 
+  it('does not escape apostrophes', () => {
+    const g = new MinimalHTML();
+    expect(generateFragment([{ insert: "'" }], g)).toEqual("<div>'</div>");
+  });
+
   describe('algorithm', () => {
     it('handles images', () => {
       visual.matchSnapshot(genHTML(IMAGES));

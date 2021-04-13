@@ -1,26 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import TheirOp from 'quill-delta/dist/Op';
-import { Op as OurOp } from '../interfaces';
+import { escapeTextContent } from '../internals';
 
-describe('interfaces', () => {
-  describe('Op', () => {
-    it('is homomorphic quill-delta', () => {
-      const mine: OurOp[] = [];
-      const theirs: TheirOp[] = [];
-
-      const toTheirs: TheirOp[] = mine;
-      const fromTheirs: OurOp[] = theirs;
+describe('internals', () => {
+  describe('escapeTextContent', () => {
+    it('escapes multiple instances of chars to replace', () => {
+      expect(escapeTextContent('<<')).toBe('&lt;&lt;');
+      expect(escapeTextContent('>>')).toBe('&gt;&gt;');
+      expect(escapeTextContent('""')).toBe('&quot;&quot;');
+      expect(escapeTextContent('&&')).toBe('&amp;&amp;');
     });
 
-    it('admits embeds', () => {
-      const mine: OurOp = { insert: { image: 'http://placekitten.com' } };
+    it('does not escape apostrophes', () => {
+      expect(escapeTextContent('\'')).toBe('\'');
     });
 
-    it('admits attributes', () => {
-      const mine: OurOp = {
-        insert: 'meh',
-        attributes: { pork: true, beans: 'baked', count: 123.45 },
-      };
+    it('does nothing for non-target chars', () => {
+      expect(escapeTextContent('NOP')).toBe('NOP');
     });
   });
 });

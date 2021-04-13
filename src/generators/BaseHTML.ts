@@ -9,6 +9,8 @@ import {
   isText,
 } from '../interfaces';
 
+import { escapeTextContent } from "../internals";
+
 export type EmbedFormatter = (
   content: string | Record<string, string>,
   attributes: Attributes
@@ -113,7 +115,7 @@ export default abstract class BaseHTML implements Generator {
     let text: string;
 
     if (isText(content)) {
-      text = XmlEntities.encode(content);
+      text = escapeTextContent(content);
     } else if (isEmbed(content)) {
       const key = Object.keys(content)[0];
       if (this.embedFormatters[key])
