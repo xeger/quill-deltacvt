@@ -38,9 +38,6 @@
     "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
   },
-  "dependencies": {
-    "html-entities": "^1.3.1"
-  },
   "description": "Converts Quill Delta to HTML (or other formats) without depending on quill, parchment or quill-delta.",
   "directories": {
     "lib": "lib"

@@ -1,5 +1,3 @@
-import { XmlEntities } from 'html-entities';
-
 import {
   Attributes,
   Content,
@@ -9,7 +7,7 @@ import {
   isText,
 } from '../interfaces';
 
-import { escapeTextContent } from "../internals";
+import { escapeTextContent } from '../internals';
 
 export type EmbedFormatter = (
   content: string | Record<string, string>,
