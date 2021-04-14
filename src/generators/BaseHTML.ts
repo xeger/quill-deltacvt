@@ -7,8 +7,6 @@ import {
   isText,
 } from '../interfaces';
 
-import { escapeTextContent } from '../internals';
-
 export type EmbedFormatter = (
   content: string | Record<string, string>,
   attributes: Attributes
@@ -61,6 +59,13 @@ interface Line {
  * completely wrong!
  */
 export default abstract class BaseHTML implements Generator {
+  static ESCAPE_CHAR_REPLACEMENTS = {
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    '&': '&amp;',
+  };
+
   embedFormatters: Record<string, EmbedFormatter>;
   strict?: true;
   textFormatters: Record<string, TextFormatter>;
@@ -109,11 +114,16 @@ export default abstract class BaseHTML implements Generator {
     return new TextSpan(text);
   }
 
+  escape(text: string): string {
+    const repl = (c: string) => BaseHTML.ESCAPE_CHAR_REPLACEMENTS[c];
+    return text.replace(/[<>"&]/g, repl);
+  }
+
   formatChars(content: Content, attributes: Attributes): string {
     let text: string;
 
     if (isText(content)) {
-      text = escapeTextContent(content);
+      text = this.escape(content);
     } else if (isEmbed(content)) {
       const key = Object.keys(content)[0];
       if (this.embedFormatters[key])

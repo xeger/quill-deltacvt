@@ -66,15 +66,3 @@ export function convertOpsToChunks(ops: Op[], g: Generator): IChunk[] {
 
   return chunks;
 }
-
-const escapeCharReplacements = {
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  '&': '&amp;',
-};
-export function escapeTextContent(content: string): string {
-  const repl = (c: string) => escapeCharReplacements[c];
-  return content.replace(/[<>"&]/g, repl);
-}
-

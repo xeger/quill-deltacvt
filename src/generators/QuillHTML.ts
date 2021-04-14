@@ -53,9 +53,6 @@ interface Line {
  * Generator that outputs HTML approximating the exact HTML output
  * of Quill's Parchment formats. No attempt is made to match the
  * visual appearance of the Quill editor.
- *
- * Notable differences from Quill HTML output:
- *   -
  */
 export default class QuillHTML extends BaseHTML {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
