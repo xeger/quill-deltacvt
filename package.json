@@ -1,6 +1,6 @@
 {
   "name": "@xeger/quill-deltacvt",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": "MIT",
   "scripts": {
     "type-check": "tsc --noEmit",
