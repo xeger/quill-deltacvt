@@ -20,6 +20,8 @@ exports[`generators/QuillHTML algorithm handles images 1`] = `
 </p><p style=\\"text-align: right\\">Right-aligned image.
 </p><br/><p style=\\"text-align: center\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 </p><p style=\\"text-align: center\\">Sized and centered image.
+</p><p><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>Image that floats left.
+</p><p><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\"/>Image that floats right.
 </p></body></html>"
 `;
 

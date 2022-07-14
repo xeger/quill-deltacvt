@@ -30,6 +30,8 @@ exports[`generators/MinimalHTML algorithm handles images 1`] = `
 </div><div>
 </div><div style=\\"text-align: center\\"><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 </div><div style=\\"text-align: center\\">Sized and centered image.
+</div><div><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\" style=\\"float:left\\"/>Image that floats left.
+</div><div><img src=\\"https://raw.githubusercontent.com/quilljs/quill/master/assets/favicon.png\\" style=\\"float:right\\"/>Image that floats right.
 </div></body></html>"
 `;
 

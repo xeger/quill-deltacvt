@@ -12,15 +12,17 @@ const LINE_STYLES = {
 
 /**
  * HTML generators for non-textual content (e.g. images)
- * in a chunk.
+ * in a chunk. Understands width, height and float.
+ * @see https://github.com/xeger/quill-image for float support
  */
 const EMBEDS: Record<string, EmbedFormatter> = {
   image(src, attributes) {
-    const { width, height } = attributes;
+    const { float, width, height } = attributes;
     const optWidth = width ? ` width="${width}"` : '';
     const optHeight = height ? ` height="${height}"` : '';
+    const optStyle = float ? ` style="float:${float}"` : '';
 
-    return `<img src="${src}"${optWidth}${optHeight}/>`;
+    return `<img src="${src}"${optWidth}${optHeight}${optStyle}/>`;
   },
 };
 
