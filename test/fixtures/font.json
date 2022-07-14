@@ -1,0 +1,30 @@
+[
+  {
+    "attributes": {
+      "font": "courier"
+    },
+    "insert": "Hello"
+  },
+  {
+    "insert": ", "
+  },
+  {
+    "attributes": {
+      "font": "serif"
+    },
+    "insert": "world"
+  },
+  {
+    "insert": "; do "
+  },
+  {
+    "attributes": {
+      "font": "monospace",
+      "bold": true
+    },
+    "insert": "you"
+  },
+  {
+    "insert": " like my fonts?\n"
+  }
+]
