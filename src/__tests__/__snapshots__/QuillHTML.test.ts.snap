@@ -70,7 +70,7 @@ exports[`generators/QuillHTML algorithm handles lists 1`] = `
 exports[`generators/QuillHTML algorithm handles standard Quill formats 1`] = `
 "<!DOCTYPE html><html><body><p>Plain.  <span style=\\"font-weight:bold\\">Bold. </span><span style=\\"font-style:italic\\">Italic. </span><span style=\\"text-decoration:underline\\">Underline.</span> <span style=\\"color:#9933ff\\">Colored.</span> <a href=\\"https://quilljs.com\\">Link.</a>
 </p><p><span style=\\"font-size:x-small\\">Small, </span>normal, <span style=\\"font-size:x-large\\">large, </span><span style=\\"font-size:xx-large\\">huge!</span>
-</p><p>Normal family. Monospace family. Serif family.
+</p><p>Normal family. <span style=\\"font-family:'monospace'\\">Monospace family.</span> <span style=\\"font-family:'serif'\\">Serif family.</span>
 </p><p>Left aligned.
 </p><p>Left <span style=\\"font-weight:bold\\">aligned</span> with <span style=\\"font-style:italic;text-decoration:underline\\">some</span> <span style=\\"color:#e60000\\">formatting</span>.
 </p><p style=\\"text-align: center\\">Centered.
