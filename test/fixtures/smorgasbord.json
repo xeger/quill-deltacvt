@@ -63,6 +63,24 @@
     "insert": "huge!"
   },
   {
+    "insert": "\nNormal family. "
+  },
+  {
+    "attributes": {
+      "font": "monospace"
+    },
+    "insert": "Monospace family."
+  },
+  {
+    "insert": " "
+  },
+  {
+    "attributes": {
+      "font": "serif"
+    },
+    "insert": "Serif family."
+  },
+  {
     "insert": "\nLeft aligned.\nLeft "
   },
   {

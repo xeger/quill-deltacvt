@@ -25,6 +25,9 @@ const TEXTS: Record<string, TextFormatter> = {
   color: (span, color) => {
     span.styles.push(`color:${color}`);
   },
+  font: (span, font) => {
+    span.styles.push(`font-family:'${font}'`);
+  },
   italic: (span) => {
     span.styles.push('font-style:italic');
   },
