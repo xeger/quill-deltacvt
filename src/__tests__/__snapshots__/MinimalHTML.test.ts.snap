@@ -10,6 +10,11 @@ exports[`generators/MinimalHTML algorithm escapes HTML syntax 1`] = `
 </div></body></html>"
 `;
 
+exports[`generators/MinimalHTML algorithm handles fonts 1`] = `
+"<!DOCTYPE html><html><body style=\\"color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif\\"><div><span style=\\"font-family:'courier'\\">Hello</span>, <span style=\\"font-family:'serif'\\">world</span>; do <span style=\\"font-weight:bold;font-family:'monospace'\\">you</span> like my fonts?
+</div></body></html>"
+`;
+
 exports[`generators/MinimalHTML algorithm handles images 1`] = `
 "<!DOCTYPE html><html><body style=\\"color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif\\"><div><img src=\\"https://quilljs.com/assets/images/logo.svg\\" width=\\"140\\" height=\\"38\\"/>
 </div><div>Sized image.
