@@ -4,6 +4,7 @@ import * as visual from './visual';
 import { generateFragment, generate } from '..';
 import QuillHTML from '../generators/QuillHTML';
 import {
+  FONT,
   IMAGES,
   LISTS,
   LISTS_STYLED,
@@ -40,6 +41,10 @@ describe('generators/QuillHTML', () => {
 
     it('escapes HTML syntax', () => {
       visual.matchSnapshot(genHTML(MALICIOUS));
+    });
+
+    it('handles fonts', () => {
+      visual.matchSnapshot(genHTML(FONT));
     });
 
     it('handles lists', () => {
