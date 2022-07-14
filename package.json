@@ -2,6 +2,7 @@
   "name": "@xeger/quill-deltacvt",
   "version": "0.9.0",
   "license": "MIT",
+  "packageManager": "npm@8.5.0",
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
