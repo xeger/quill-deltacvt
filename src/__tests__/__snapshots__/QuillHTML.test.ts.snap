@@ -10,7 +10,7 @@ exports[`generators/QuillHTML algorithm escapes HTML syntax 1`] = `
 `;
 
 exports[`generators/QuillHTML algorithm handles fonts 1`] = `
-"<!DOCTYPE html><html><body><p><span style=\\"font-family:'Courier New'\\">Hello</span>, <span style=\\"font-family:serif\\">world</span>; do <span style=\\"font-weight:bold;font-family:monospace\\">you</span> like my fonts?
+"<!DOCTYPE html><html><body><p><span style=\\"font-family:'Courier New', monospace\\">Hello</span>, <span style=\\"font-family:serif\\">world</span>; do <span style=\\"font-weight:bold;font-family:monospace\\">you</span> like my fonts?
 </p></body></html>"
 `;
 

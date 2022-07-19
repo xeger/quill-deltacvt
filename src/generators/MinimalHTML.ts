@@ -39,7 +39,13 @@ const TEXTS: Record<string, TextFormatter> = {
   },
   font: (span, font) => {
     const fontFamily =
-      typeof font === 'string' && font.includes(' ') ? `'${font}'` : font;
+      typeof font === 'string' &&
+      font
+        .split(',')
+        .map((fontName) =>
+          fontName.trim().includes(' ') ? `'${fontName}'` : fontName
+        )
+        .join(',');
     span.styles.push(`font-family:${fontFamily}`);
   },
   italic: (span) => {
