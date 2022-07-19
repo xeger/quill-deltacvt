@@ -38,9 +38,7 @@ const TEXTS: Record<string, TextFormatter> = {
     span.styles.push(`color:${color}`);
   },
   font: (span, font) => {
-    const fontFamily =
-      typeof font === 'string' && font.includes(' ') ? `'${font}'` : font;
-    span.styles.push(`font-family:${fontFamily}`);
+    span.styles.push(`font-family:${font}`);
   },
   italic: (span) => {
     span.styles.push('font-style:italic');
