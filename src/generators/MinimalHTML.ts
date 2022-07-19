@@ -1,4 +1,5 @@
 import BaseHTML, { EmbedFormatter, TextFormatter } from './BaseHTML';
+import * as util from './util';
 
 const BODY_STYLE =
   'color:#303030;font-weight:400;white-space:pre-wrap;font-family:sans-serif';
@@ -38,7 +39,8 @@ const TEXTS: Record<string, TextFormatter> = {
     span.styles.push(`color:${color}`);
   },
   font: (span, font) => {
-    span.styles.push(`font-family:${font}`);
+    if (typeof font === 'string')
+      span.styles.push(`font-family:${util.escapeFontFamily(font)}`);
   },
   italic: (span) => {
     span.styles.push('font-style:italic');

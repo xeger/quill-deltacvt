@@ -1,7 +1,7 @@
 [
   {
     "attributes": {
-      "font": "'Courier New', monospace"
+      "font": "Courier New, monospace"
     },
     "insert": "Hello"
   },
