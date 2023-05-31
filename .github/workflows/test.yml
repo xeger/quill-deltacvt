@@ -2,11 +2,10 @@ name: Test
 
 on:
   - pull_request
-  - push
 
 jobs:
   lint:
-    name: Lint + Type Check
+    name: Static
 
     runs-on: ubuntu-latest
 
@@ -20,7 +19,7 @@ jobs:
       - run: npm run type-check
 
   test:
-    name: Functional Tests
+    name: Functional
 
     runs-on: ubuntu-latest
 
