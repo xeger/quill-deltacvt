@@ -3,6 +3,8 @@ import {
   Content,
   Chunk,
   Generator,
+  Line,
+  Options,
   isEmbed,
   isText,
 } from '../interfaces';
@@ -28,16 +30,6 @@ export class TextSpan {
     if (style.length) return `<span${style}>${this.text}</span>`;
     else return this.text || '';
   }
-}
-
-export interface Options {
-  strict?: true;
-}
-
-interface Line {
-  align?: string;
-  list?: string;
-  text: string;
 }
 
 /**
@@ -67,16 +59,16 @@ export default abstract class BaseHTML implements Generator {
   };
 
   embedFormatters: Record<string, EmbedFormatter>;
-  strict?: true;
+  strict: boolean;
   textFormatters: Record<string, TextFormatter>;
 
   constructor(
     embedFormatters: Record<string, EmbedFormatter>,
     textFormatters: Record<string, TextFormatter>,
-    { strict }: Options = {}
+    { strict }: Partial<Options> = {}
   ) {
     this.embedFormatters = embedFormatters;
-    this.strict = strict;
+    this.strict = !!strict;
     this.textFormatters = textFormatters;
   }
 

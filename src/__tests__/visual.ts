@@ -147,10 +147,10 @@ function compare(received, original, callback, options: Options = {}) {
 /// Compare two HTML documents side-by-side in a browser with a reference, if the callback
 /// throws an exception or if process.env.DEBUG is true.
 function compareWithReference(
-  reference,
-  received,
-  original,
-  callback,
+  reference: string,
+  received: string,
+  original: string,
+  callback: () => any,
   options: Options = {}
 ) {
   let shown = false;
@@ -169,7 +169,7 @@ function compareWithReference(
 }
 
 /// Expect received toMatchSnapshot. If match fails, compare received vs. snapshot.
-export function matchSnapshot(received, options: Options = {}) {
+export function matchSnapshot(received: string, options: Options = {}): void {
   compare(
     received,
     currentTestSnapshot(),
@@ -188,10 +188,10 @@ export function matchSnapshot(received, options: Options = {}) {
 /// Expect received toMatchSnapshot. If match fails, compare received vs. snapshot and provide an original reference.
 /// Use for round-trip tests employ a snapshot as their "approval" mark.
 export function matchSnapshotWithReference(
-  reference,
-  received,
+  reference: string,
+  received: string,
   options: Options = {}
-) {
+): void {
   compareWithReference(
     reference,
     received,
