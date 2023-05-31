@@ -1,4 +1,5 @@
 import BaseHTML, { EmbedFormatter, TextFormatter } from './BaseHTML';
+import { Line, Options } from '../interfaces';
 import * as util from './util';
 
 /**
@@ -44,16 +45,6 @@ const TEXTS: Record<string, TextFormatter> = {
   },
 };
 
-export interface Options {
-  strict?: true;
-}
-
-interface Line {
-  align?: string;
-  list?: string;
-  text: string;
-}
-
 /**
  * Generator that outputs HTML approximating the exact HTML output
  * of Quill's Parchment formats. No attempt is made to match the
@@ -61,10 +52,9 @@ interface Line {
  */
 export default class QuillHTML extends BaseHTML {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
-  strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
-  constructor(options: Options = {}) {
+  constructor(options: Partial<Options> = {}) {
     super(EMBEDS, TEXTS, options);
   }
 

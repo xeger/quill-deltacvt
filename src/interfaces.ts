@@ -53,3 +53,21 @@ export interface Generator {
   /// Transform generated fragment into a well-formed, complete document.
   wrap(fragment: string): string;
 }
+
+/**
+ * Data type used internally by Generator implementations.
+ * Represents a single line of text in the document (which may change over time as deltas are applied).
+ */
+export interface Line {
+  align?: string;
+  list?: string;
+  text: string;
+}
+
+/**
+ * Settings that are common to all conversions.
+ */
+export interface Options {
+  /// Throw an error if unknown Quill content (e.g. an embed) is encountered.
+  strict: boolean;
+}

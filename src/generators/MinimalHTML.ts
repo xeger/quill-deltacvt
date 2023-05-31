@@ -1,4 +1,5 @@
 import BaseHTML, { EmbedFormatter, TextFormatter } from './BaseHTML';
+import { Line, Options } from '../interfaces';
 import * as util from './util';
 
 const BODY_STYLE =
@@ -56,16 +57,6 @@ const TEXTS: Record<string, TextFormatter> = {
   },
 };
 
-export interface Options {
-  strict?: true;
-}
-
-interface Line {
-  align?: string;
-  list?: string;
-  text: string;
-}
-
 /**
  * Generator that outputs HTML approximating the visual style of Quill's
  * Parchment formats, but with notable differences:
@@ -86,10 +77,9 @@ interface Line {
  */
 export default class MinimalHTML extends BaseHTML {
   embedFormatters: Record<string, EmbedFormatter> = { ...EMBEDS };
-  strict?: true;
   textFormatters: Record<string, TextFormatter> = { ...TEXTS };
 
-  constructor(options: Options = {}) {
+  constructor(options: Partial<Options> = {}) {
     super(EMBEDS, TEXTS, options);
   }
 
