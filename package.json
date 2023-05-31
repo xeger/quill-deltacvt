@@ -1,6 +1,6 @@
 {
   "name": "@xeger/quill-deltacvt",
-  "version": "0.9.0",
+  "version": "0.0.0",
   "license": "MIT",
   "packageManager": "npm@8.5.0",
   "scripts": {
@@ -30,7 +30,7 @@
     "eslint": "^7.9.0",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
-    "html-validate": "^3.3.0",
+    "html-validate": "^7.18.0",
     "jest": "^26.4.2",
     "jsdom": "^16.4.0",
     "prettier": "^2.1.2",
